@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitButton.disabled = true;
             submitButton.textContent = 'Entrando...';
 
-            const response = await fetch(`${API_URL}/auth/login`, {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,4 +41,5 @@ document.addEventListener('DOMContentLoaded', () => {
             submitButton.textContent = 'Entrar';
         }
     });
+
 });
