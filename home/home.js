@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const userResponse = await fetch(`${API_URL}/auth/me`, {
+            const userResponse = await fetch(`${API_URL}/api/auth/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!userResponse.ok) { logout(); return; }
@@ -233,4 +233,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('logout-btn').addEventListener('click', logout);
     loadHomePage();
+
 });
