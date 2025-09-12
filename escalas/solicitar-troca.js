@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`${API_URL}/escalas/me/todas`, {
+            const response = await fetch(`${API_URL}/api/escalas/me/todas`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error();
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // ESSA ROTA PRECISA SER CRIADA NO BACKEND!
-            const response = await fetch(`${API_URL}/escalas/${scheduleId}/voluntarios-para-troca`, {
+            const response = await fetch(`${API_URL}/api/escalas/${scheduleId}/voluntarios-para-troca`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error();

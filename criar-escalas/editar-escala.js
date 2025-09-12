@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function carregarDados() {
         try {
             // Puxa os dados da escala e os voluntários nela
-            const escalaResponse = await fetch(`${API_URL}/escalas/turno/${escalaId}`, {
+            const escalaResponse = await fetch(`${API_URL}/api/escalas/turno/${escalaId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!escalaResponse.ok) throw new Error('Falha ao carregar a escala.');
             const escala = await escalaResponse.json();
 
             // Puxa TODOS os voluntários daquele ministério
-            const voluntariosResponse = await fetch(`${API_URL}/ministerios/${escala.ministerio._id}/voluntarios`, {
+            const voluntariosResponse = await fetch(`${API_URL}/api/ministerios/${escala.ministerio._id}/voluntarios`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!voluntariosResponse.ok) throw new Error('Falha ao carregar voluntários do ministério.');
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         submitButton.textContent = 'Salvando...';
 
         try {
-            const response = await fetch(`${API_URL}/escalas/turno/${escalaId}`, {
+            const response = await fetch(`${API_URL}/api/escalas/turno/${escalaId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`${API_URL}/escalas/turno/${turnoId}`, {
+        const response = await fetch(`${API_URL}/api/escalas/turno/${turnoId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!response.ok) throw new Error('Escala não encontrada.');
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             // A requisição de exclusão agora será validada pelo backend
-            const response = await fetch(`${API_URL}/escalas/turno/${turnoId}`, {
+            const response = await fetch(`${API_URL}/api/escalas/turno/${turnoId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

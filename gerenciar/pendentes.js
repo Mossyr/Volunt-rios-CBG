@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Busca os voluntários pendentes na API
     try {
-        const response = await fetch(`${API_URL}/lider/pendentes/${ministerioId}`, {
+        const response = await fetch(`${API_URL}/api/lider/pendentes/${ministerioId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.target.textContent = 'Aprovando...';
 
             try {
-                const response = await fetch(`${API_URL}/lider/aprovar`, {
+                const response = await fetch(`${API_URL}/api/lider/aprovar`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

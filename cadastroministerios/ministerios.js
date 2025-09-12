@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para buscar e exibir os ministérios
     async function fetchAndDisplayMinisterios() {
         try {
-            const response = await fetch(`${API_URL}/ministerios`);
+            // CORREÇÃO: Adicionado '/api'
+            const response = await fetch(`${API_URL}/api/ministerios`);
             if (!response.ok) {
                 throw new Error('Erro ao buscar ministérios.');
             }
@@ -77,7 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
             continueBtn.disabled = true;
             continueBtn.textContent = 'Enviando...';
 
-            const response = await fetch(`${API_URL}/auth/register`, {
+            // CORREÇÃO: Adicionado '/api'
+            const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchUnavailableDates() {
         try {
-            const response = await fetch(`${API_URL}/disponibilidade/me`, {
+            const response = await fetch(`${API_URL}/api/disponibilidade/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Falha ao carregar indisponibilidades.');
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function toggleAvailability(dateString, dayEl) {
         try {
             dayEl.style.pointerEvents = 'none'; // Previne cliques duplos
-            const response = await fetch(`${API_URL}/disponibilidade/toggle`, {
+            const response = await fetch(`${API_URL}/api/disponibilidade/toggle`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

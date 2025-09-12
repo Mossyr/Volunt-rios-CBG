@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`${API_URL}/escalas/me/todas`, {
+        const response = await fetch(`${API_URL}/api/escalas/me/todas`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 

@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const token = localStorage.getItem('authToken');
-            const response = await fetch(`${API_URL}/chatbot/action`, {
+            const response = await fetch(`${API_URL}/api/chatbot/action`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(requestBody),

@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // IMPORTANTE: A URL da API foi alterada para refletir a nova funcionalidade.
         // O seu backend precisa suportar esta rota:
-        const fetchUrl = `${API_URL}/lider/voluntarios/${ministerioId}?data=${date}`;
+        const fetchUrl = `${API_URL}/api/lider/voluntarios/${ministerioId}?data=${date}`;
 
         try {
             const response = await fetch(fetchUrl, {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             submitButton.disabled = true;
             submitButton.textContent = "Salvando...";
-            const response = await fetch(`${API_URL}/escalas`, {
+            const response = await fetch(`${API_URL}/api/escalas`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

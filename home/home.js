@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = await userResponse.json();
             userNameEl.textContent = user.nome;
             localStorage.setItem('userData', JSON.stringify(user));
-            const scheduleResponse = await fetch(`${API_URL}/escalas/me/proximo`, {
+            const scheduleResponse = await fetch(`${API_URL}/api/escalas/me/proximo`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const proximoTurno = await scheduleResponse.json();
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function fetchAndDisplaySchedules(ministerioId, container, token) {
         try {
-            const response = await fetch(`${API_URL}/escalas/ministerio/${ministerioId}`, {
+            const response = await fetch(`${API_URL}/api/escalas/ministerio/${ministerioId}`, {
                  headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const token = localStorage.getItem('authToken');
-            const response = await fetch(`${API_URL}/escalas/turno/${escalaId}?ministerioId=${ministerioId}`, {
+            const response = await fetch(`${API_URL}/api/escalas/turno/${escalaId}?ministerioId=${ministerioId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -233,5 +233,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('logout-btn').addEventListener('click', logout);
     loadHomePage();
-
 });

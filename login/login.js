@@ -41,5 +41,4 @@ document.addEventListener('DOMContentLoaded', () => {
             submitButton.textContent = 'Entrar';
         }
     });
-
 });
