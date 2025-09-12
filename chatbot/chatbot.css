@@ -1,0 +1,140 @@
+/* chatbot.css */
+@import url('../css/base.css');
+
+:root {
+    --cor-primaria: #6A5ACD;
+    --cor-fundo: #F8F9FA;
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6C757D;
+    --cor-borda: #E9ECEF;
+}
+
+/* --- Layout da Página do Chat --- */
+.chat-page-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px); /* Altura total menos o bottom-nav */
+}
+.page-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+}
+.page-header h1 {
+    font-size: 1.5rem; font-weight: 700;
+}
+.page-header .subtitle {
+    font-size: 0.9rem; color: var(--cor-texto-secundario); margin: 0;
+}
+.back-button {
+    color: var(--cor-primaria);
+}
+
+/* --- Container Principal de Mensagens --- */
+.chat-main-content {
+    flex-grow: 1;
+    overflow-y: hidden; /* A rolagem será no .chat-messages */
+    display: flex;
+    flex-direction: column-reverse; /* Mensagens começam de baixo */
+}
+
+.chat-messages {
+    padding: 0 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse; /* Mantém o scroll no fundo */
+    gap: 16px;
+}
+
+/* --- Estilo das Bolhas de Mensagem --- */
+.chat-message {
+    max-width: 85%;
+    padding: 12px 18px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.chat-message p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.bot-message {
+    background-color: #E9EFF6; /* Um cinza-azulado claro */
+    color: var(--cor-texto-principal);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px; /* Detalhe visual */
+}
+
+.user-message {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px; /* Detalhe visual */
+}
+
+/* --- Estilo dos Botões de Opção --- */
+.chat-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: stretch;
+    margin: 10px 0;
+}
+
+.chat-option-btn {
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-primaria);
+    border: 1px solid var(--cor-borda);
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.chat-option-btn:hover {
+    background-color: var(--cor-primaria);
+    color: white;
+    border-color: var(--cor-primaria);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(106, 90, 205, 0.3);
+}
+
+/* --- Estilo do Seletor de Data --- */
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background-color: #E9EFF6;
+    border-radius: 18px;
+    align-self: flex-start;
+    width: 100%;
+    max-width: 280px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 5px;
+}
+
+.chat-date-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-fundo-card);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Para o pop-up de chat em outras telas (como escalas.html) */
+.chat-container {
+    /* ... (seus estilos existentes para o pop-up) ... */
+}

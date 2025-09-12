@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Voluntários</title>
+    <link rel="stylesheet" href="cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="form-header">
+            <h2>Crie sua conta</h2>
+            <p>Preencha os dados para começar a servir.</p>
+        </header>
+        <main class="form-card">
+            <form id="register-form">
+                <div>
+                    <div class="input-group">
+                        <label for="register-nome">Nome</label>
+                        <input type="text" id="register-nome" name="register-nome" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-sobrenome">Sobrenome</label>
+                        <input type="text" id="register-sobrenome" name="register-sobrenome" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-celular">Número de celular (com DDD)</label>
+                        <input type="tel" id="register-celular" name="register-celular" placeholder="+55 (11) 91234-5678" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password">Crie uma Senha</label>
+                        <input type="password" id="register-password" name="register-password" minlength="6" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Avançar</button>
+                    <a href="/login/login.html" class="form-link">Já tem uma conta? Faça login</a>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/imask"></script>
+
+    <script src="cadastro.js"></script>
+</body>
+</html>

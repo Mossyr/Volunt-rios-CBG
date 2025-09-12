@@ -1,0 +1,40 @@
+/* criar-escala.css (CORRIGIDO) */
+
+/* Importa a base de estilos */
+@import url('../css/base.css');
+
+/* Estilos específicos da página Criar Escala */
+
+.time-group {
+    display: flex;
+    gap: 16px;
+}
+.time-group .input-group {
+    flex: 1;
+}
+#volunteers-list {
+    margin-top: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.volunteer-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--cor-borda);
+    cursor: pointer;
+}
+.volunteer-option:last-child {
+    border-bottom: none;
+}
+.volunteer-option input {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+.volunteer-option label {
+    font-weight: 500;
+    flex: 1;
+}
+
+/* A chave '}' extra que estava aqui foi removida */

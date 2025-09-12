@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Troca | Voluntários</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="solicitar-troca.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="page-header">
+            <a href="../home/home.html" class="back-button" aria-label="Voltar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+            <h1>Solicitar Troca</h1>
+        </header>
+
+        <main class="main-container">
+            <div class="loader"></div>
+
+            <div id="step-1-choose-schedule" class="step-container active">
+                <h2>Primeiro, escolha qual escala você quer trocar:</h2>
+                <div id="my-schedules-list" class="list-container">
+                    </div>
+            </div>
+
+            <div id="step-2-choose-volunteer" class="step-container">
+                <h2 id="volunteer-step-title">Ótimo! Agora, com quem você quer falar?</h2>
+                <p id="volunteer-step-subtitle" class="subtitle">Encontramos as seguintes pessoas disponíveis para troca nesta data.</p>
+                <div id="available-volunteers-list" class="list-container">
+                    </div>
+                <button id="back-to-step-1" class="btn btn-secondary btn-back">Voltar</button>
+            </div>
+            
+            <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+        </main>
+    </div>
+    <script src="solicitar-troca.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Voluntários</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="form-header">
+            <h2>Bem-vindo(a) de volta!</h2>
+        </header>
+        <main class="form-card">
+            <form id="login-form">
+                <div>
+                    <div class="input-group">
+                        <label for="login-nome">Seu nome</label>
+                        <!-- MUDANÇAS AQUI -->
+                        <input type="text" id="login-nome" name="login-nome" required placeholder="Ex: Moacir">
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" name="login-password" required>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                    <a href="../cadastro/cadastro.html" class="form-link">Não tem uma conta? Cadastre-se</a>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>

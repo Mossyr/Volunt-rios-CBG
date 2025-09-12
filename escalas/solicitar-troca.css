@@ -1,0 +1,124 @@
+@import url('../css/base.css');
+
+:root {
+    --cor-primaria: #6A5ACD;
+    --cor-fundo: #F8F9FA;
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6C757D;
+    --cor-borda: #E9ECEF;
+    --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Cabeçalho da Página --- */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.page-header h1 {
+    font-size: 1.5rem; font-weight: 700; color: var(--cor-texto-principal);
+}
+.back-button {
+    color: var(--cor-primaria);
+}
+
+/* --- Container Principal --- */
+.step-container {
+    display: none;
+}
+.step-container.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+h2 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.subtitle {
+    color: var(--cor-texto-secundario);
+    margin-bottom: 24px;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- Itens da Lista (Escalas e Voluntários) --- */
+.list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.list-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-card);
+}
+
+.schedule-item-header, .volunteer-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.schedule-item-date, .volunteer-item-name {
+    color: var(--cor-texto-principal);
+    font-size: 1.05rem;
+}
+
+.schedule-item-ministry {
+    font-size: 0.8rem;
+    color: var(--cor-primaria);
+    font-weight: 600;
+    background-color: #E9EFF6;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.volunteer-item-contact-btn {
+    font-size: 0.8rem;
+    color: white;
+    font-weight: 600;
+    background-color: var(--cor-primaria);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.schedule-item-details {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.btn-back {
+    margin-top: 24px;
+    width: 100%;
+}
+
+.feedback-message {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    padding: 32px;
+    background-color: var(--cor-fundo-card);
+    text-align: center;
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda);
+}

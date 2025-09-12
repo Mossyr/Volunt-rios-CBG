@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministérios | Voluntários</title>
+    <link rel="stylesheet" href="ministerios.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="form-header">
+            <h2>Quais ministérios você faz parte?</h2>
+            <p>Selecione as opções abaixo. Você poderá alterar isso depois.</p>
+        </header>
+        <main class="form-card">
+            <div class="ministry-selection-container">
+                <div class="ministry-list">
+                    <div class="ministry-option">
+                        <input type="checkbox" id="interna" name="ministerio" value="interna">
+                        <label for="interna">
+                            <span class="ministry-name">Interna</span>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="ministry-option">
+                        <input type="checkbox" id="iluminacao" name="ministerio" value="iluminacao">
+                        <label for="iluminacao">
+                            <span class="ministry-name">Iluminação</span>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <button id="continue-btn" class="btn btn-primary" disabled>Seguir em frente</button>
+            </div>
+        </main>
+    </div>
+    <script src="ministerios.js"></script>
+</body>
+</html>

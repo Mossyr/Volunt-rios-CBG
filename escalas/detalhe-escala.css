@@ -1,0 +1,94 @@
+@import url('../css/base.css');
+
+:root {
+    --cor-primaria: #6A5ACD;
+    --cor-fundo: #F8F9FA;
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6C757D;
+    --cor-borda: #E9ECEF;
+    --cor-erro: #E53935;
+    --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Cabeçalho da Página --- */
+.page-header {
+    margin-bottom: 24px;
+}
+.page-header h1 {
+    font-size: 1.5rem; font-weight: 700; color: var(--cor-texto-principal); margin-top: 16px;
+}
+.back-button {
+    color: var(--cor-primaria); text-decoration: none; font-weight: 600;
+}
+
+/* --- Card Principal --- */
+.card {
+    background-color: var(--cor-fundo-card);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-card);
+}
+
+/* --- Seção de Informações --- */
+.escala-info {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.escala-info p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.7;
+}
+.escala-info strong {
+    color: var(--cor-texto-principal);
+}
+
+/* --- Lista de Voluntários --- */
+.voluntarios-list h2 {
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+}
+.voluntario-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    background-color: var(--cor-fundo);
+    margin-bottom: 8px;
+}
+.voluntario-item p {
+    font-weight: 500;
+    color: var(--cor-texto-principal);
+}
+
+/* --- Seção de Ações do Líder --- */
+.actions-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--cor-borda);
+    display: flex;
+    gap: 12px;
+}
+.actions-section .btn {
+    flex: 1;
+}
+.btn-delete {
+    background-color: transparent;
+    border: 1px solid var(--cor-erro);
+    color: var(--cor-erro);
+}
+.btn-delete:hover {
+    background-color: var(--cor-erro);
+    color: white;
+}

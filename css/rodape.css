@@ -1,0 +1,68 @@
+/* rodape.css - Estilos para o menu de navegação inferior */
+
+/* Importa as variáveis de cor (opcional, mas recomendado se você tiver um arquivo para elas) */
+/* @import url('variaveis.css'); */
+
+/* Se não tiver um arquivo de variáveis, pode defini-las aqui */
+:root {
+    --cor-primaria: #6A5ACD;
+    --cor-fundo-card: #FFFFFF;
+    --cor-borda: #E9ECEF;
+    --safe-area-bottom: env(safe-area-inset-bottom); /* Para iOS */
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(70px + var(--safe-area-bottom));
+    background-color: var(--cor-fundo-card);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: var(--safe-area-bottom);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--cor-borda);
+    z-index: 100; /* Garante que fique acima do conteúdo */
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #8A97AB;
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--cor-primaria);
+    transform: translateY(-3px);
+}
+
+.nav-item.active {
+    color: var(--cor-primaria);
+}
+
+.nav-item.active span {
+    font-weight: 700;
+}
+
+/* Indicador visual para a aba ativa */
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    top: -11px; /* Posiciona a barrinha dentro do nav */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 4px;
+    background-color: var(--cor-primaria);
+    border-radius: 2px;
+}

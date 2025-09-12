@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Escala | Painel</title>
+    <link rel="stylesheet" href="criar-escala.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="page-header">
+            <a href="../home/home.html" class="back-button">&larr; Voltar para a Home</a>
+            <h1>Criar Nova Escala</h1>
+            <p id="ministry-name-header">Carregando...</p>
+        </header>
+        <main>
+            <form id="create-escala-form">
+                <div class="card">
+                    <div class="input-group">
+                        <label for="escala-data">Data</label>
+                        <input type="date" id="escala-data" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="escala-turno">Turno</label>
+                        <select id="escala-turno" required>
+                            <option value="" disabled selected>Selecione um turno</option>
+                            <option value="Manhã">Manhã</option>
+                            <option value="Noite">Noite</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Selecione os Voluntários</h2>
+                    <div id="volunteers-list">
+                        <p class="info-message">Selecione uma data para ver os voluntários disponíveis.</p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Salvar Escala</button>
+            </form>
+        </main>
+    </div>
+    <script src="criar-escala.js"></script>
+</body>
+</html>

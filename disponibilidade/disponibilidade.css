@@ -1,0 +1,153 @@
+/* disponibilidade.css */
+/* Se você criou um base.css, pode importar dele. Senão, as variáveis estão aqui. */
+:root {
+    --cor-primaria: #6A5ACD; /* Roxo vibrante (SlateBlue) */
+    --cor-secundaria: #4682B4; /* Azul Aço (SteelBlue) */
+    --cor-fundo: #F8F9FA; /* Cinza bem claro */
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6C757D;
+    --cor-borda: #E9ECEF;
+    --cor-erro: #E53935; /* Vermelho para indisponibilidade */
+    --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Cabeçalho da Página --- */
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cor-texto-principal);
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+}
+
+.back-button {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- Card do Calendário --- */
+.calendar-card {
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    text-transform: capitalize;
+}
+
+.calendar-header button {
+    background: transparent;
+    border: 1px solid var(--cor-borda);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    color: var(--cor-primaria);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.calendar-header button:hover {
+    background-color: #eef2f7;
+    transform: scale(1.05);
+}
+
+/* --- Grid do Calendário --- */
+.calendar-weekdays, .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 10px; /* Um pouco mais de respiro */
+}
+
+.calendar-weekdays div {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.calendar-grid {
+    margin-top: 16px;
+}
+
+/* --- Dias do Calendário --- */
+.calendar-day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.calendar-day.past-day {
+    color: #b0b0b0;
+    cursor: default;
+    background-color: transparent;
+    opacity: 0.6;
+}
+
+.calendar-day:not(.past-day):hover {
+    transform: scale(1.05);
+    background-color: #eef2f7; /* Fundo sutil no hover */
+}
+
+.calendar-day.unavailable {
+    background-color: var(--cor-erro);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+}
+
+.calendar-day.today {
+    border-color: var(--cor-primaria);
+    font-weight: 700;
+    color: var(--cor-primaria);
+}
+
+/* Estilo para quando o dia de hoje está indisponível */
+.calendar-day.today.unavailable {
+    background-color: var(--cor-erro);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.7); /* Borda branca para destacar no fundo vermelho */
+}

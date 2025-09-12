@@ -1,0 +1,30 @@
+/* pendentes.css (CORRIGIDO) */
+
+/* Importa a base de estilos */
+@import url('../css/base.css');
+
+/* Estilos específicos da página de Aprovações Pendentes */
+
+.pending-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--cor-fundo-card);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--cor-borda);
+}
+.pending-item p {
+    font-weight: 500;
+}
+.approve-btn {
+    background-color: var(--cor-sucesso);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* A chave '}' extra que estava aqui foi removida */

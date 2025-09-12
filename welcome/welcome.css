@@ -1,0 +1,120 @@
+/* Importa a fonte do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+:root {
+    --cor-primaria: #3A6AB2;
+    --cor-secundaria: #608BC5;
+    --cor-fundo: #F0F4F9;
+    --cor-texto-escuro: #1C2B42;
+    --cor-texto-claro: #FFFFFF;
+    --cor-borda: #DDE3EC;
+    --safe-area-bottom: env(safe-area-inset-bottom);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+
+body {
+    min-height: 100svh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #E0E7F0;
+    color: var(--cor-texto-escuro);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Adicionado padding para evitar que o container cole nas bordas */
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px; /* Mantém a largura máxima para consistência no mobile */
+    height: 100%;
+    margin: 0 auto;
+    background-color: var(--cor-fundo);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    border-radius: 24px; /* Adicionado border-radius por padrão */
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+}
+
+.home-icon {
+    color: var(--cor-primaria);
+    width: 70px;
+    margin: 0 auto 24px;
+}
+
+.home-actions {
+    padding: 24px 24px calc(24px + var(--safe-area-bottom)) 24px;
+    background-color: var(--cor-fundo);
+    border-bottom-left-radius: 24px; /* Garante cantos arredondados */
+    border-bottom-right-radius: 24px;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+p {
+    line-height: 1.6;
+    color: #5A6A82;
+    margin: 0 auto 24px;
+    max-width: 320px;
+    text-align: center;
+}
+
+.btn {
+    display: block; width: 100%; padding: 18px; margin-bottom: 16px;
+    font-size: 1rem; font-weight: 500; border: none;
+    border-radius: 14px; cursor: pointer; text-align: center;
+    text-decoration: none; transition: all 0.2s ease;
+}
+
+.btn:last-child {
+    margin-bottom: 0; /* Remove a margem do último botão */
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    box-shadow: 0 4px 15px rgba(58, 106, 178, 0.25);
+}
+
+.btn-primary:hover { filter: brightness(1.05); }
+
+.btn-secondary {
+    background-color: #E2E9F2;
+    color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+/* ===== RESPONSIVIDADE PARA TABLETS E DESKTOPS ===== */
+@media (min-width: 768px) {
+    body {
+        background-color: #E0E7F0; /* Mantém o fundo cinza para contraste */
+    }
+    .app-container {
+        max-width: 450px; /* Uma largura confortável para visualização em desktop */
+        height: auto; /* Altura se ajusta ao conteúdo */
+        min-height: 600px; /* Mantém uma altura mínima razoável */
+        max-height: 90vh; /* Limita a altura em telas muito altas */
+    }
+}

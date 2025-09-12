@@ -1,0 +1,314 @@
+/* Importa a base de estilos - Se você não tiver um, pode colocar as variáveis aqui */
+@import url('../css/base.css');
+
+/* Sugestão para seu arquivo base.css (ou para colocar no topo deste arquivo):
+*/
+:root {
+    --cor-primaria: #6A5ACD; /* Roxo vibrante (SlateBlue) */
+    --cor-secundaria: #4682B4; /* Azul Aço (SteelBlue) */
+    --cor-fundo: #F8F9FA; /* Cinza bem claro */
+    --cor-fundo-card: #FFFFFF;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6C757D;
+    --cor-borda: #E9ECEF;
+    --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --safe-area-bottom: env(safe-area-inset-bottom); /* Para iOS */
+}
+
+/* --- Estilos Gerais e Home --- */
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: calc(80px + var(--safe-area-bottom));
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.user-greeting p {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 4px;
+}
+
+.user-greeting h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cor-texto-principal);
+}
+
+.btn-logout {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--cor-texto-secundario);
+}
+
+/* --- Context Switcher --- */
+.context-switcher {
+    display: flex;
+    background-color: #E2E9F2;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.context-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.context-btn.active {
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-primaria);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* --- Painéis de Conteúdo --- */
+.content-panel {
+    display: none;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.content-panel.active {
+    display: grid;
+}
+
+/* --- Estilos Modernizados dos Cards --- */
+.card {
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* Card de Compromisso em Destaque */
+.card-commitment {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: white;
+}
+.card-commitment h2, .card-commitment p {
+    color: white;
+}
+.card-commitment .ministry-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-weight: 500;
+}
+.card-commitment .commitment-details {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.card-commitment .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #EAEAEA;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+}
+.card-commitment .detail-item svg {
+    color: white;
+}
+.card-commitment .detail-item span {
+    font-weight: 500;
+}
+.card-commitment .card-actions .btn-secondary {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+.card-commitment .card-actions .btn-primary {
+    background-color: white;
+    color: var(--cor-primaria);
+    border: none;
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.card-actions .btn {
+    flex: 1;
+}
+
+/* --- Lista de Escalas da Liderança --- */
+.schedules-list-container {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.schedules-list-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin-bottom: 16px;
+}
+
+.schedules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    transition: background-color 0.3s ease;
+}
+
+.schedule-item:hover {
+    background-color: #eef2f7;
+}
+
+.schedule-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.schedule-info strong {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+
+.schedule-info span {
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+}
+
+.schedule-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-icon {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: #d8e2f0;
+    transform: scale(1.1);
+}
+
+.btn-edit-schedule svg { color: var(--cor-secundaria); }
+.btn-delete-schedule svg { color: #E53935; }
+
+.no-schedules-message, .error-message {
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+    padding: 16px;
+    background-color: var(--cor-fundo);
+    text-align: center;
+    border-radius: 8px;
+}
+
+.error-message {
+    color: #E53935;
+    background-color: #FFEBEE;
+}
+
+
+/* --- Navegação Inferior --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(70px + var(--safe-area-bottom));
+    background-color: var(--cor-fundo-card);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: var(--safe-area-bottom);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid var(--cor-borda);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #8A97AB;
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--cor-primaria);
+    transform: translateY(-3px);
+}
+
+.nav-item.active {
+    color: var(--cor-primaria);
+}
+
+.nav-item.active span {
+    font-weight: 700;
+}
+
+.nav-item.active::after {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 4px;
+    background-color: var(--cor-primaria);
+    border-radius: 2px;
+}

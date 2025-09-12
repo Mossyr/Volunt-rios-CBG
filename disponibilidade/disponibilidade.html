@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Disponibilidade | Voluntários</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="disponibilidade.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="page-header">
+            <a href="../home/home.html" class="back-button">&larr; Voltar</a>
+            <h1>Minha Indisponibilidade</h1>
+            <p>Toque nos dias em que você <strong>não</strong> poderá servir. Dias em vermelho indicam indisponibilidade.</p>
+        </header>
+        <main>
+            <div class="calendar-card">
+                <div class="calendar-header">
+                    <button id="prev-month-btn">&larr;</button>
+                    <h2 id="month-year-header"></h2>
+                    <button id="next-month-btn">&rarr;</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
+                </div>
+                <div id="calendar-grid" class="calendar-grid"></div>
+            </div>
+        </main>
+    </div>
+    <script src="disponibilidade.js"></script>
+</body>
+</html>
