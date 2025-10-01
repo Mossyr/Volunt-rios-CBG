@@ -85,10 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
 
-            if (result.status === 'indisponivel') {
+            // --- ESTA É A PARTE MAIS IMPORTANTE ---
+            // Agora o back-end vai retornar 'conflito_escala' e este IF será executado.
+            if (result.status === 'conflito_escala') {
+                const querTrocar = confirm("Você já está em uma escala neste dia. Deseja solicitar uma troca?");
+                if (querTrocar) {
+                    // Redireciona para a página de troca, usando o ID da escala que o back-end enviou.
+                    window.location.href = `../escalas/solicitar-troca.html?escalaId=${result.escalaId}`;
+                }
+            } else if (result.status === 'indisponivel') {
                 unavailableDates.add(dateString);
                 dayEl.classList.add('unavailable');
-            } else {
+            } else { // status === 'disponivel'
                 unavailableDates.delete(dateString);
                 dayEl.classList.remove('unavailable');
             }

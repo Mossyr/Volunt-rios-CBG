@@ -1,10 +1,18 @@
 // home.js
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Elementos da Página ---
     const userNameEl = document.getElementById('user-name');
     const contextSwitcherEl = document.getElementById('context-switcher');
     const volunteerPanelEl = document.getElementById('volunteer-panel');
     const leaderPanelContentEl = document.getElementById('leader-panel-content');
+    
+    // --- Elementos de Notificação ---
+    const notificationBell = document.getElementById('notification-bell');
+    const notificationCounter = document.getElementById('notification-counter');
+    const notificationsPanel = document.getElementById('notifications-panel');
+    const notificationsList = document.getElementById('notifications-list');
+
     const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     async function loadHomePage() {
@@ -17,7 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const userResponse = await fetch(`${API_URL}/api/auth/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            if (!userResponse.ok) { logout(); return; }
+            if (!userResponse.ok) { 
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                window.location.href = '../login/login.html';
+                return; 
+            }
             const user = await userResponse.json();
             userNameEl.textContent = user.nome;
             localStorage.setItem('userData', JSON.stringify(user));
@@ -34,16 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 volunteerPanelEl.style.display = 'grid';
             }
+            // Após carregar os dados do usuário, buscamos as notificações
+            await fetchNotifications(); 
         } catch (error) {
             console.error('Erro ao carregar dados da home:', error);
         }
     }
 
-    // **** FUNÇÃO COM A LÓGICA ATUALIZADA ****
     function updateNextCommitmentCard(turno) {
         const commitmentCard = document.querySelector('.card-commitment');
         if (!turno || !turno._id) {
-            // Remove elementos desnecessários e mostra mensagem de descanso
             const details = commitmentCard.querySelector('.commitment-details');
             const actions = commitmentCard.querySelector('.card-actions');
             if(details) details.remove();
@@ -57,14 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const dataFormatada = new Date(turno.data).toLocaleDateString('pt-BR', { 
-            weekday: 'long', 
-            day: 'numeric', 
-            month: 'long',
-            timeZone: 'UTC' 
+            weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' 
         });
         
         commitmentCard.querySelector('.ministry-tag').textContent = turno.ministerio.nome;
-        // Selecionando pelos IDs para maior segurança
         document.getElementById('commitment-date').textContent = dataFormatada;
         document.getElementById('commitment-shift').textContent = `Turno: ${turno.turno}`; 
 
@@ -75,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const solicitarTrocaBtn = commitmentCard.querySelector('.btn-request-swap');
         solicitarTrocaBtn.addEventListener('click', () => {
-            // Sugestão: Leve o ID da escala para a próxima tela para já carregar os dados
             window.location.href = `../escalas/solicitar-troca.html?escalaId=${turno._id}`;
         });
     }
@@ -90,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             const schedules = await response.json();
-            container.innerHTML = ''; // Limpa o loader
+            container.innerHTML = ''; 
 
             if (schedules.length === 0) {
                  container.innerHTML = '<p class="no-schedules-message">Nenhuma escala criada para este ministério.</p>';
@@ -225,12 +233,129 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function logout() {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userData');
-        window.location.href = '../login/login.html';
+    // ======================================================
+    // --- LÓGICA DE NOTIFICAÇÕES (CONECTADA À API REAL) ---
+    // ======================================================
+
+    async function fetchNotifications() {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+
+        try {
+            const response = await fetch(`${API_URL}/api/notificacoes`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                console.error("Falha ao buscar notificações");
+                return;
+            }
+
+            const notifications = await response.json();
+            renderNotifications(notifications);
+
+        } catch (error) {
+            console.error("Erro de conexão ao buscar notificações:", error);
+        }
     }
 
-    document.getElementById('logout-btn').addEventListener('click', logout);
+    function renderNotifications(notifications) {
+        const unreadCount = notifications.filter(n => !n.read).length;
+        if (unreadCount > 0) {
+            notificationCounter.textContent = unreadCount;
+            notificationCounter.style.display = 'flex';
+        } else {
+            notificationCounter.style.display = 'none';
+        }
+
+        notificationsList.innerHTML = '';
+
+        if (notifications.length === 0) {
+            notificationsList.innerHTML = '<li class="notification-item-empty">Nenhuma notificação por aqui.</li>';
+            return;
+        }
+
+        notifications.forEach(notification => {
+            const item = document.createElement('li');
+            item.className = 'notification-item';
+            if (!notification.read) item.classList.add('unread');
+
+            // Usa o 'fromUser.nome' populado pelo back-end
+            const fromUserName = notification.fromUser ? notification.fromUser.nome : 'Sistema';
+
+            let contentHTML = '';
+            switch (notification.type) {
+                case 'SWAP_REQUEST':
+                    // A mensagem agora pode ser mais simples, pois o back-end já a formata
+                    contentHTML = `
+                        <div class="notification-icon swap">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                        </div>
+                        <div class="notification-content">
+                            <p>${notification.message}</p>
+                            <div class="notification-actions">
+                                <button class="btn btn-secondary btn-sm" data-action="reject" data-id="${notification._id}">Recusar</button>
+                                <button class="btn btn-primary btn-sm" data-action="accept" data-id="${notification._id}">Aceitar</button>
+                            </div>
+                        </div>`;
+                    break;
+                case 'SWAP_INFO':
+                    contentHTML = `
+                         <div class="notification-icon info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </div>
+                        <div class="notification-content">
+                            <p>${notification.message}</p>
+                        </div>`;
+                    break;
+                default:
+                    contentHTML = `<div class="notification-content"><p>${notification.message}</p></div>`;
+                    break;
+            }
+            item.innerHTML = contentHTML;
+            notificationsList.appendChild(item);
+        });
+    }
+
+    notificationBell.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationsPanel.classList.toggle('open');
+        // Opcional: Marcar notificações como lidas ao abrir o painel
+        if (notificationsPanel.classList.contains('open')) {
+            markNotificationsAsRead();
+        }
+    });
+
+    async function markNotificationsAsRead() {
+        const unreadCount = parseInt(notificationCounter.textContent);
+        if (isNaN(unreadCount) || unreadCount === 0) {
+            return; // Não faz nada se não houver notificações não lidas
+        }
+
+        try {
+            const token = localStorage.getItem('authToken');
+            await fetch(`${API_URL}/api/notificacoes/mark-read`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            // Zera o contador visualmente na hora
+            notificationCounter.style.display = 'none';
+            notificationCounter.textContent = '0';
+            // Remove o destaque de "não lido" dos itens
+            document.querySelectorAll('.notification-item.unread').forEach(item => {
+                item.classList.remove('unread');
+            });
+        } catch (error) {
+            console.error('Erro ao marcar notificações como lidas:', error);
+        }
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!notificationsPanel.contains(e.target) && !notificationBell.contains(e.target)) {
+            notificationsPanel.classList.remove('open');
+        }
+    });
+    
+    // --- Inicia o carregamento da página ---
     loadHomePage();
 });

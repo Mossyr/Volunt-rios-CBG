@@ -27,6 +27,11 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 24px;
+    position: relative; /* Para o painel de notificações */
+}
+
+.user-greeting {
+    flex-grow: 1;
 }
 
 .user-greeting p {
@@ -40,14 +45,6 @@ body {
     font-weight: 700;
     line-height: 1.2;
     color: var(--cor-texto-principal);
-}
-
-.btn-logout {
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    color: var(--cor-texto-secundario);
 }
 
 /* --- Context Switcher --- */
@@ -257,58 +254,124 @@ body {
     background-color: #FFEBEE;
 }
 
-
-/* --- Navegação Inferior --- */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: calc(70px + var(--safe-area-bottom));
-    background-color: var(--cor-fundo-card);
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding-top: 10px;
-    padding-bottom: var(--safe-area-bottom);
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
-    border-top: 1px solid var(--cor-borda);
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: #8A97AB;
-    font-size: 0.75rem;
-    font-weight: 500;
+/* --- ESTILOS DO SISTEMA DE NOTIFICAÇÃO --- */
+.header-actions {
     position: relative;
-    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.nav-item:hover {
-    color: var(--cor-primaria);
-    transform: translateY(-3px);
+.notification-bell {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--cor-texto-secundario);
+    position: relative;
 }
 
-.nav-item.active {
-    color: var(--cor-primaria);
-}
-
-.nav-item.active span {
-    font-weight: 700;
-}
-
-.nav-item.active::after {
-    content: '';
+.notification-counter {
     position: absolute;
-    top: -11px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 4px;
-    background-color: var(--cor-primaria);
-    border-radius: 2px;
+    top: 4px;
+    right: 4px;
+    background-color: #E53935; /* Vermelho */
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--cor-fundo-card);
+}
+
+.notifications-panel {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 320px;
+    max-width: 90vw;
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--cor-borda);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.notifications-panel.open {
+    display: block;
+}
+
+.notifications-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.notifications-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item.unread {
+    background-color: #F8F9FA; /* Fundo levemente destacado para não lidas */
+}
+
+.notification-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-icon.swap { background-color: #E3F2FD; color: #1E88E5; } /* Azul */
+.notification-icon.info { background-color: #E8F5E9; color: #43A047; } /* Verde */
+
+.notification-content p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.notification-content p strong {
+    color: var(--cor-texto-principal);
+}
+
+.notification-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.notification-item-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
 }

@@ -1,0 +1,183 @@
+/* Importa a base de estilos - garanta que o caminho está correto */
+@import url('../css/base.css');
+
+/* --- Estilos Gerais da Página de Perfil --- */
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: calc(80px + var(--safe-area-bottom));
+}
+
+#app-blur-container.blurred {
+    filter: blur(5px) brightness(0.7);
+    transition: filter 0.3s ease-in-out;
+    /* Impede interação com o conteúdo desfocado */
+    pointer-events: none;
+}
+
+.profile-header { margin-bottom: 24px; }
+.profile-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cor-texto-principal);
+}
+.profile-content .card {
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
+    margin-bottom: 20px;
+}
+
+/* --- Card de Informações do Usuário --- */
+.user-info-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.user-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background-color: var(--cor-primaria);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; font-weight: 700;
+    margin-bottom: 16px;
+}
+.user-info-card h2 {
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin: 0;
+}
+.user-info-card p {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    margin-top: 4px;
+}
+
+/* --- Card de Ministérios --- */
+.ministries-card h3 {
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin: -4px 0 16px 0;
+}
+.ministries-list { display: flex; flex-direction: column; gap: 12px; }
+.ministry-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid var(--cor-borda);
+}
+.ministry-item:last-child { border-bottom: none; padding-bottom: 0; }
+.ministry-item:first-child { padding-top: 0; }
+.ministry-info strong { font-size: 1rem; font-weight: 500; color: var(--cor-texto-principal); }
+.ministry-info span { display: block; font-size: 0.85rem; color: var(--cor-texto-secundario); }
+.ministry-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    text-transform: uppercase;
+}
+.ministry-status.aprovado { background-color: #E8F5E9; color: #388E3C; }
+.ministry-status.pendente { background-color: #FFF3E0; color: #F57C00; }
+
+/* --- Card de Ações --- */
+.actions-card { padding: 12px 24px; }
+.actions-list { list-style: none; padding: 0; margin: 0; }
+.actions-list li a {
+    display: flex; align-items: center;
+    padding: 16px 0;
+    text-decoration: none; color: var(--cor-texto-principal);
+    font-weight: 500; transition: background-color 0.2s ease;
+}
+.actions-list li:not(:last-child) a { border-bottom: 1px solid var(--cor-borda); }
+.actions-list a span { flex-grow: 1; margin-left: 16px; }
+.actions-list a svg { color: var(--cor-texto-secundario); }
+.actions-list a .chevron { color: #CBD5E1; }
+
+/* --- Seção de Logout (DE VOLTA) --- */
+.logout-section { margin-top: 24px; }
+.btn-logout {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; width: 100%; padding: 16px;
+    background-color: #FFF1F2; /* Vermelho bem claro */
+    color: #E53935; /* Vermelho escuro */
+    border: 1px solid #FFCDD2; /* Borda vermelha clara */
+    border-radius: 12px;
+    font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s ease;
+}
+.btn-logout:hover { background-color: #FFCDD2; }
+
+/* --- Loader --- */
+.loader {
+    width: 24px; height: 24px;
+    border: 3px solid var(--cor-borda);
+    border-bottom-color: var(--cor-primaria);
+    border-radius: 50%;
+    display: block; margin: 20px auto;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- ESTILOS DO MODAL DE CONFIRMAÇÃO --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.modal-backdrop:not(.modal-hidden) { opacity: 1; }
+.modal-content {
+    background-color: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.modal-backdrop:not(.modal-hidden) .modal-content { transform: scale(1); }
+.modal-content h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--cor-texto-principal);
+    margin-top: 0; margin-bottom: 12px;
+}
+.modal-content p {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: stretch;
+}
+.modal-actions .btn {
+    flex: 1; /* Faz os botões ocuparem o mesmo espaço */
+}
+.btn.btn-danger {
+    background-color: #E53935;
+    color: white;
+    border: none;
+}
+.btn.btn-danger:hover {
+    background-color: #D32F2F;
+}
+.modal-hidden {
+    display: none;
+}
