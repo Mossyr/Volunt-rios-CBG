@@ -1,0 +1,95 @@
+@import url('../css/base.css');
+
+body {
+    background-color: var(--cor-fundo);
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: calc(80px + var(--safe-area-bottom));
+}
+
+.page-header h1 {
+    font-size: 2rem; font-weight: 700; color: var(--cor-texto-principal);
+}
+.page-header p {
+    font-size: 1rem; color: var(--cor-texto-secundario);
+}
+
+.ministry-filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 0 24px 0;
+    scrollbar-width: none; /* Firefox */
+}
+.ministry-filters::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-fundo-card);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+.filter-btn.active {
+    background-color: var(--cor-primaria);
+    color: white;
+    border-color: var(--cor-primaria);
+}
+
+#public-escalas-list {
+    display: grid;
+    gap: 16px;
+}
+
+.escala-card {
+    background-color: var(--cor-fundo-card);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-card);
+}
+
+.escala-card .card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+}
+.escala-card h2 {
+    font-size: 1.1rem; font-weight: 600; color: var(--cor-texto-principal);
+}
+.escala-card .ministry-tag {
+    background-color: #E9EFF6; color: var(--cor-primaria);
+    font-size: 0.75rem; font-weight: 600; padding: 6px 12px;
+    border-radius: 8px;
+}
+.escala-details p {
+    font-weight: 500; color: var(--cor-texto-secundario);
+}
+.volunteers-list {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cor-borda);
+}
+.volunteers-list strong {
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    font-size: 0.9rem;
+}
+.volunteers-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.volunteers-list li {
+    background-color: var(--cor-fundo);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+}

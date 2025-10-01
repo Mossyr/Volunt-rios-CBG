@@ -2,12 +2,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const ministryHeader = document.getElementById('ministry-name-header');
     const volunteersListDiv = document.getElementById('volunteers-list');
     const form = document.getElementById('create-escala-form');
-    const dateInput = document.getElementById('escala-data'); // NOVO: Pega o input de data
+    const dateInput = document.getElementById('escala-data');
+    // ============================================
+    // --- LINHA ADICIONADA ---
+    const backLink = document.getElementById('back-link');
+    // ============================================
+
     const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
 
     const urlParams = new URLSearchParams(window.location.search);
     const ministerioId = urlParams.get('ministerioId');
+
+    // ============================================
+    // --- LÓGICA ADICIONADA ---
+    // Monta o link de "Voltar" dinamicamente com o ID do ministério
+    if (ministerioId) {
+        backLink.href = `../gerenciar-ministerio/gerenciar-ministerio.html?ministerioId=${ministerioId}`;
+    } else {
+        backLink.href = '../home/home.html'; // Fallback para a home se não encontrar o ID
+    }
+    // ============================================
 
     if (!token || !ministerioId) {
         alert('Acesso inválido.');
@@ -15,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // ALTERADO: A função inicial agora só carrega o nome do ministério
     async function loadMinistryInfo() {
         try {
             const userData = JSON.parse(localStorage.getItem('userData'));
@@ -29,23 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // NOVO: Função para buscar voluntários disponíveis para uma data específica
     async function fetchAvailableVolunteers(date) {
         volunteersListDiv.innerHTML = "<p>Buscando voluntários disponíveis...</p>";
-
-        // IMPORTANTE: A URL da API foi alterada para refletir a nova funcionalidade.
-        // O seu backend precisa suportar esta rota:
         const fetchUrl = `${API_URL}/api/lider/voluntarios/${ministerioId}?data=${date}`;
-
         try {
             const response = await fetch(fetchUrl, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-
             if (!response.ok) {
                 throw new Error('Não foi possível carregar os voluntários.');
             }
-
             const volunteers = await response.json();
             displayVolunteers(volunteers);
         } catch (error) {
@@ -68,16 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <label for="${vol._id}">${vol.nome} ${vol.sobrenome}</label>
             `;
             volunteersListDiv.appendChild(div);
-        });
+});
     }
 
-    // NOVO: Adiciona o "escutador de eventos" para o campo de data
     dateInput.addEventListener('change', () => {
         const selectedDate = dateInput.value;
         if (selectedDate) {
             fetchAvailableVolunteers(selectedDate);
         } else {
-            // Limpa a lista se a data for removida
             volunteersListDiv.innerHTML = '<p class="info-message">Selecione uma data para ver os voluntários.</p>';
         }
     });
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errorData.msg || 'Erro ao salvar a escala.');
             }
             alert('Escala criada com sucesso!');
-            window.location.href = '../home/home.html';
+            window.location.href = `../gerenciar-ministerio/gerenciar-ministerio.html?ministerioId=${ministerioId}`; // Volta para a tela de gerenciamento
         } catch (error) {
             console.error("Erro ao criar escala:", error);
             alert(error.message);
@@ -129,6 +134,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Carrega apenas a informação do ministério ao iniciar a página
     loadMinistryInfo();
 });

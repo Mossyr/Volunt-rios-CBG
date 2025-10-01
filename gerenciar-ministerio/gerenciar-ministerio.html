@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Ministério | Voluntários</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="gerenciar-ministerio.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="page-header">
+            <a href="../home/home.html" class="back-button" aria-label="Voltar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+            <h1 id="ministry-name-header">Carregando...</h1>
+        </header>
+
+        <main>
+            <div class="loader"></div>
+            <div id="dashboard-content" style="display: none;">
+                <div class="card actions-grid">
+                    <a id="link-criar-escala" href="/criar-escalas/criar-escala.html" class="action-item">Criar Escala</a>
+                    <a id="link-aprovar" href="/gerenciar/pendentes.html" class="action-item">Aprovar Voluntários</a>
+                </div>
+
+                <div class="card">
+                    <h2>Próximas Escalas</h2>
+                    <div id="proximas-escalas-list"></div>
+                </div>
+
+                <div class="card">
+                    <h2>Voluntários do Ministério</h2>
+                    <ul id="voluntarios-list" class="volunteers-list"></ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="gerenciar-ministerio.js"></script>
+</body>
+</html>

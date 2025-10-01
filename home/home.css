@@ -1,18 +1,16 @@
-/* Importa a base de estilos - Se você não tiver um, pode colocar as variáveis aqui */
+/* Importa a base de estilos */
 @import url('../css/base.css');
 
-/* Sugestão para seu arquivo base.css (ou para colocar no topo deste arquivo):
-*/
 :root {
-    --cor-primaria: #6A5ACD; /* Roxo vibrante (SlateBlue) */
-    --cor-secundaria: #4682B4; /* Azul Aço (SteelBlue) */
-    --cor-fundo: #F8F9FA; /* Cinza bem claro */
+    --cor-primaria: #6A5ACD;
+    --cor-secundaria: #4682B4;
+    --cor-fundo: #F8F9FA;
     --cor-fundo-card: #FFFFFF;
     --cor-texto-principal: #212529;
     --cor-texto-secundario: #6C757D;
     --cor-borda: #E9ECEF;
     --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
-    --safe-area-bottom: env(safe-area-inset-bottom); /* Para iOS */
+    --safe-area-bottom: env(safe-area-inset-bottom);
 }
 
 /* --- Estilos Gerais e Home --- */
@@ -27,19 +25,17 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 24px;
-    position: relative; /* Para o painel de notificações */
+    position: relative;
 }
 
 .user-greeting {
     flex-grow: 1;
 }
-
 .user-greeting p {
     font-size: 1rem;
     color: var(--cor-texto-secundario);
     margin-bottom: 4px;
 }
-
 .user-greeting h1 {
     font-size: 2rem;
     font-weight: 700;
@@ -55,7 +51,6 @@ body {
     padding: 4px;
     margin-bottom: 24px;
 }
-
 .context-btn {
     flex: 1;
     padding: 10px;
@@ -68,7 +63,6 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 .context-btn.active {
     background-color: var(--cor-fundo-card);
     color: var(--cor-primaria);
@@ -81,7 +75,6 @@ body {
     grid-template-columns: 1fr;
     gap: 20px;
 }
-
 .content-panel.active {
     display: grid;
 }
@@ -95,12 +88,10 @@ body {
     border: 1px solid var(--cor-borda);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
 }
-
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -108,270 +99,67 @@ body {
     margin-bottom: 16px;
 }
 
-/* Card de Compromisso em Destaque */
-.card-commitment {
-    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
-    color: white;
-}
-.card-commitment h2, .card-commitment p {
-    color: white;
-}
-.card-commitment .ministry-tag {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    font-weight: 500;
-}
-.card-commitment .commitment-details {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-.card-commitment .detail-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #EAEAEA;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    border-radius: 10px;
-}
-.card-commitment .detail-item svg {
-    color: white;
-}
-.card-commitment .detail-item span {
-    font-weight: 500;
-}
-.card-commitment .card-actions .btn-secondary {
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-}
-.card-commitment .card-actions .btn-primary {
-    background-color: white;
-    color: var(--cor-primaria);
-    border: none;
-}
+/* Card de Compromisso */
+.card-commitment { background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; }
+.card-commitment h2, .card-commitment p { color: white; }
+.card-commitment .ministry-tag { background-color: rgba(255, 255, 255, 0.2); color: white; font-weight: 500; }
+.card-commitment .commitment-details { display: grid; gap: 12px; margin-bottom: 24px; }
+.card-commitment .detail-item { display: flex; align-items: center; gap: 12px; color: #EAEAEA; background-color: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 10px; }
+.card-commitment .detail-item svg { color: white; }
+.card-commitment .detail-item span { font-weight: 500; }
+.card-commitment .card-actions .btn-secondary { background-color: transparent; border: 1px solid white; color: white; }
+.card-commitment .card-actions .btn-primary { background-color: white; color: var(--cor-primaria); border: none; }
 
-.card-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-}
+.card-actions { display: flex; gap: 12px; margin-top: 16px; }
+.card-actions .btn { flex: 1; }
 
-.card-actions .btn {
-    flex: 1;
-}
+/* Notificações */
+.header-actions { position: relative; }
+.notification-bell { background: none; border: none; padding: 8px; cursor: pointer; color: var(--cor-texto-secundario); position: relative; }
+.notification-counter { position: absolute; top: 4px; right: 4px; background-color: #E53935; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--cor-fundo-card); }
+.notifications-panel { display: none; position: absolute; top: 60px; right: 0; width: 320px; max-width: 90vw; background-color: var(--cor-fundo-card); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); border: 1px solid var(--cor-borda); z-index: 100; overflow: hidden; }
+.notifications-panel.open { display: block; }
+.notifications-header { padding: 16px; border-bottom: 1px solid var(--cor-borda); }
+.notifications-header h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+.notifications-list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+.notification-item { padding: 16px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--cor-borda); font-size: 0.9rem; color: var(--cor-texto-secundario); }
+.notification-item-empty { padding: 24px; text-align: center; color: var(--cor-texto-secundario); font-size: 0.9rem; }
 
-/* --- Lista de Escalas da Liderança --- */
-.schedules-list-container {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--cor-borda);
-}
+/* Link "Ver todas as escalas" */
+.view-all-schedules-link { text-align: center; margin: -8px 0 20px 0; }
+.view-all-schedules-link a { color: var(--cor-primaria); font-weight: 600; text-decoration: none; transition: opacity 0.3s ease; }
+.view-all-schedules-link a:hover { opacity: 0.8; }
 
-.schedules-list-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cor-texto-principal);
-    margin-bottom: 16px;
-}
-
-.schedules-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.schedule-item {
+/* ====================================================== */
+/* --- ESTILOS FALTANTES PARA O PAINEL DE LIDERANÇA --- */
+/* ====================================================== */
+.ministry-leader-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 20px;
     border-radius: 12px;
     background-color: var(--cor-fundo);
     border: 1px solid var(--cor-borda);
-    transition: background-color 0.3s ease;
-}
-
-.schedule-item:hover {
-    background-color: #eef2f7;
-}
-
-.schedule-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.schedule-info strong {
-    font-size: 1rem;
-    font-weight: 600;
+    text-decoration: none;
     color: var(--cor-texto-principal);
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
 }
-
-.schedule-info span {
-    font-size: 0.85rem;
-    color: var(--cor-texto-secundario);
+.ministry-leader-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-card);
+    border-color: var(--cor-primaria);
 }
-
-.schedule-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-icon {
-    background-color: transparent;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-icon:hover {
-    background-color: #d8e2f0;
-    transform: scale(1.1);
-}
-
-.btn-edit-schedule svg { color: var(--cor-secundaria); }
-.btn-delete-schedule svg { color: #E53935; }
-
-.no-schedules-message, .error-message {
-    font-size: 0.9rem;
-    color: var(--cor-texto-secundario);
-    padding: 16px;
-    background-color: var(--cor-fundo);
-    text-align: center;
-    border-radius: 8px;
-}
-
-.error-message {
-    color: #E53935;
-    background-color: #FFEBEE;
-}
-
-/* --- ESTILOS DO SISTEMA DE NOTIFICAÇÃO --- */
-.header-actions {
-    position: relative;
-}
-
-.notification-bell {
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    color: var(--cor-texto-secundario);
-    position: relative;
-}
-
-.notification-counter {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background-color: #E53935; /* Vermelho */
-    color: white;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    font-size: 0.7rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--cor-fundo-card);
-}
-
-.notifications-panel {
-    display: none; /* Escondido por padrão */
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 320px;
-    max-width: 90vw;
-    background-color: var(--cor-fundo-card);
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--cor-borda);
-    z-index: 100;
-    overflow: hidden;
-}
-
-.notifications-panel.open {
-    display: block;
-}
-
-.notifications-header {
-    padding: 16px;
-    border-bottom: 1px solid var(--cor-borda);
-}
-
-.notifications-header h3 {
-    margin: 0;
-    font-size: 1rem;
+.ministry-leader-card strong {
+    font-size: 1.1rem;
     font-weight: 600;
 }
-
-.notifications-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.notification-item {
-    padding: 16px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--cor-borda);
+.ministry-leader-card span {
     font-size: 0.9rem;
     color: var(--cor-texto-secundario);
 }
-
-.notification-item:last-child {
-    border-bottom: none;
-}
-
-.notification-item.unread {
-    background-color: #F8F9FA; /* Fundo levemente destacado para não lidas */
-}
-
-.notification-icon {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.notification-icon.swap { background-color: #E3F2FD; color: #1E88E5; } /* Azul */
-.notification-icon.info { background-color: #E8F5E9; color: #43A047; } /* Verde */
-
-.notification-content p {
-    margin: 0;
-    line-height: 1.4;
-}
-
-.notification-content p strong {
-    color: var(--cor-texto-principal);
-}
-
-.notification-actions {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-}
-
-.notification-item-empty {
-    padding: 24px;
-    text-align: center;
-    color: var(--cor-texto-secundario);
-    font-size: 0.9rem;
+.ministry-arrow {
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
 }
