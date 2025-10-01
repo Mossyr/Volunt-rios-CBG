@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <span>${escala.voluntarios.length} voluntário(s)</span>
                     </div>
                     <div class="schedule-actions">
-                        <a href="../editar-escala/editar-escala.html?id=${escala._id}" class="btn-icon btn-edit-schedule" aria-label="Editar">✏️</a>
+                        <a href="../criar-escalas/editar-escala.html?id=${escala._id}" class="btn-icon btn-edit-schedule" aria-label="Editar">✏️</a>
                         <button class="btn-icon btn-delete-schedule" data-escala-id="${escala._id}" aria-label="Excluir">🗑️</button>
                     </div>
                 `;
