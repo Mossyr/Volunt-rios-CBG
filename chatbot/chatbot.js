@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     
     // IMPORTANTE: Mude para a URL do seu backend em produção
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     if (!chatContainer || !chatMessages) {
         console.error("Elementos essenciais do chat não foram encontrados.");
@@ -280,4 +280,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Com isso, o JS com `appendChild` e `scrollToBottom` funcionará perfeitamente.
     
     initializeChat();
+
 });
