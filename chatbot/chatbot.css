@@ -145,4 +145,11 @@
     .date-picker-container .chat-option-btn {
         text-align: center;
     }
+
 }
+
+.volunteer-checklist { margin-top: 10px; }
+.volunteer-option { display: flex; align-items: center; padding: 8px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+.volunteer-option:hover { background-color: #f0f0f0; }
+.volunteer-option input { margin-right: 12px; width: 18px; height: 18px; }
+.confirm-volunteers-btn { display: block; width: 100%; margin-top: 15px; background-color: var(--cor-primaria); color: white; }
