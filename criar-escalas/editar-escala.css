@@ -1,3 +1,5 @@
+/* editar-escala.css (Atualizado com estilos para edição especializada) */
+
 @import url('../css/base.css');
 
 .form-container {
@@ -10,17 +12,25 @@
     gap: 20px;
 }
 
+/* Campos somente leitura */
 .form-input[readonly] {
-    background-color: #f0f2f5;
+    background-color: var(--cor-fundo-secundaria);
     cursor: not-allowed;
     opacity: 0.8;
 }
 
+/* Estilos da seção padrão (Listas de Adicionar/Remover) */
 .volunteers-section {
     margin-top: 16px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
+}
+/* No desktop, usar 2 colunas */
+@media (min-width: 768px) {
+    .volunteers-section {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .volunteer-list-wrapper h3 {
@@ -73,43 +83,122 @@
 }
 
 .btn-toggle-volunteer.add {
-    color: #28a745; /* Verde */
-    border-color: #28a745;
+    color: var(--cor-sucesso);
+    border-color: var(--cor-sucesso);
 }
 .btn-toggle-volunteer.add:hover {
-    background-color: #28a745;
+    background-color: var(--cor-sucesso);
     color: white;
 }
 
 .btn-toggle-volunteer.remove {
-    color: #E53935; /* Vermelho */
-    border-color: #E53935;
+    color: var(--cor-perigo);
+    border-color: var(--cor-perigo);
 }
 .btn-toggle-volunteer.remove:hover {
-    background-color: #E53935;
+    background-color: var(--cor-perigo);
     color: white;
 }
 
-.form-actions {
-    margin-top: 24px;
-}
-.btn-submit {
-    width: 100%;
+/* ---------------------------------------------------- */
+/* Estilos para as Seções Especializadas (Comunicação e Mídias) */
+/* ---------------------------------------------------- */
+
+.specialized-section h2 {
+    color: var(--cor-primaria-escura);
+    margin-bottom: 10px;
 }
 
-/* Feedback */
-.feedback-message {
-    padding: 16px;
+/* Estilos de Comunicação (Selects) */
+#comunicacao-edit-section .input-group {
+    margin-bottom: 16px;
+}
+#comunicacao-edit-section select {
+    /* Estilo de select consistente com criar-escala.css */
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--cor-borda);
     border-radius: 8px;
-    text-align: center;
+    font-size: 1rem;
+    background-color: white;
+    appearance: none; /* Remove o estilo padrão do SO */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 1.2em;
+    cursor: pointer;
+}
+
+/* Estilos de Mídias (Checkboxes agrupados) */
+.midias-roles-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+@media (min-width: 768px) {
+    .midias-roles-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.midias-role-wrapper h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--cor-texto-secundario);
+}
+
+.volunteer-checkbox-list {
+    /* Reutiliza o estilo de criar-escala.css */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: var(--cor-fundo-card);
+}
+
+.volunteer-checkbox-list .volunteer-option {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--cor-borda);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.volunteer-checkbox-list .volunteer-option:hover {
+    background-color: var(--cor-borda);
+}
+.volunteer-checkbox-list .volunteer-option:last-child {
+    border-bottom: none;
+}
+.volunteer-checkbox-list .volunteer-option input {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    accent-color: var(--cor-primaria);
+    cursor: pointer;
+}
+.volunteer-checkbox-list .volunteer-option label {
     font-weight: 500;
+    flex: 1;
+    cursor: pointer;
+}
+
+
+/* Estilos para a área de ações (botões) */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 20px;
 }
-.feedback-message.success {
-    background-color: #D4EDDA;
-    color: #155724;
+.btn-danger {
+    background-color: var(--cor-perigo);
+    color: white;
+    border: none;
 }
-.feedback-message.error {
-    background-color: #F8D7DA;
-    color: #721C24;
+.btn-danger:hover {
+    background-color: var(--cor-perigo-escura);
 }

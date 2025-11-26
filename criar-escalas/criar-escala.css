@@ -1,4 +1,4 @@
-/* criar-escala.css (CORRIGIDO) */
+/* criar-escala.css (CORRIGIDO E ESTILIZADO) */
 
 /* Importa a base de estilos */
 @import url('../css/base.css');
@@ -12,10 +12,15 @@
 .time-group .input-group {
     flex: 1;
 }
+
+/* ---------------------------------------------------- */
+/* Estilos para a seleção de voluntários (Checkboxes Padrão) */
+/* ---------------------------------------------------- */
 #volunteers-list {
     margin-top: 16px;
     max-height: 200px;
     overflow-y: auto;
+    padding-right: 8px; /* Espaço para a barra de rolagem */
 }
 .volunteer-option {
     display: flex;
@@ -23,18 +28,86 @@
     padding: 12px 4px;
     border-bottom: 1px solid var(--cor-borda);
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+.volunteer-option:hover {
+    background-color: var(--cor-borda);
 }
 .volunteer-option:last-child {
     border-bottom: none;
 }
 .volunteer-option input {
+    /* Estilização básica para checkbox */
     width: 20px;
     height: 20px;
     margin-right: 12px;
+    accent-color: var(--cor-primaria);
+    cursor: pointer;
 }
 .volunteer-option label {
     font-weight: 500;
     flex: 1;
+    cursor: pointer;
 }
 
-/* A chave '}' extra que estava aqui foi removida */
+
+/* ---------------------------------------------------- */
+/* Estilos para as Novas Seções Dinâmicas (Mídias e Comunicação) */
+/* ---------------------------------------------------- */
+
+/* Contêiner de Checkboxes Específicos (Usado em Mídias) */
+.volunteer-checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* O espaçamento já é dado pelo padding do .volunteer-option */
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    margin-top: 8px;
+    background-color: var(--cor-fundo-card);
+}
+
+.volunteer-checkbox-list .volunteer-option {
+    padding: 8px 12px;
+}
+.volunteer-checkbox-list .volunteer-option:last-child {
+    border-bottom: none;
+}
+
+/* Estilização para o Select Adicionado na Comunicação */
+/* Usa a estilização de .input-group padrão, mas garante que o select se pareça com o app */
+#comunicacao-volunteers .input-group {
+    margin-bottom: 16px;
+}
+#comunicacao-volunteers select {
+    /* Herda o estilo input-group padrão */
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+    appearance: none; /* Remove o estilo padrão do SO para melhor consistência */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 1.2em;
+    cursor: pointer;
+}
+
+/* Garante que o select de Modalidade também tenha um bom visual */
+#modalidade-input-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 1.2em;
+    cursor: pointer;
+}

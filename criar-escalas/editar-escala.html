@@ -11,7 +11,7 @@
 <body>
     <div class="app-container">
         <header class="page-header">
-            <a href="../home/home.html" class="back-button" aria-label="Voltar">
+            <a href="javascript:history.back()" class="back-button" aria-label="Voltar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             </a>
             <h1>Editar Escala</h1>
@@ -21,30 +21,66 @@
             <div class="loader"></div>
             <form id="edit-escala-form" style="display: none;">
                 <div class="form-group">
-                    <label>Evento</label>
-                    <input type="text" id="evento-nome" class="form-input" readonly>
+                    <label>Ministério</label>
+                    <input type="text" id="ministerio-nome" class="form-input" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Data e Turno</label>
-                    <input type="text" id="data-turno" class="form-input" readonly>
+                    <label>Data e Evento</label>
+                    <input type="text" id="data-evento" class="form-input" readonly>
+                </div>
+                <div class="form-group" id="modalidade-display-group">
+                    <label>Modalidade</label>
+                    <input type="text" id="modalidade-display" class="form-input" readonly>
                 </div>
 
-                <div class="volunteers-section">
+                <div class="volunteers-section" id="default-volunteers-section">
                     <div class="volunteer-list-wrapper">
                         <h3>Na escala (<span id="atuais-count">0</span>)</h3>
-                        <ul id="voluntarios-atuais-list" class="volunteer-list">
-                            </ul>
+                        <ul id="voluntarios-atuais-list" class="volunteer-list"></ul>
                     </div>
                     
                     <div class="volunteer-list-wrapper">
                         <h3>Disponíveis para adicionar (<span id="disponiveis-count">0</span>)</h3>
-                        <ul id="voluntarios-disponiveis-list" class="volunteer-list">
-                            </ul>
+                        <ul id="voluntarios-disponiveis-list" class="volunteer-list"></ul>
                     </div>
                 </div>
 
+                <div id="comunicacao-edit-section" class="specialized-section" style="display: none;">
+                    <h2>Voluntários da Comunicação (Culto de Domingo)</h2>
+                    <p class="info-message">A escala é dividida em dois papéis obrigatórios.</p>
+                    
+                    <div class="input-group">
+                        <label for="comunicador-avisos-edit">Comunicador de Avisos</label>
+                        <select id="comunicador-avisos-edit">
+                            <option value="" disabled selected>Selecione o Voluntário</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="comunicador-ofertas-edit">Comunicador de Ofertas (e Oração)</label>
+                        <select id="comunicador-ofertas-edit">
+                            <option value="" disabled selected>Selecione o Voluntário</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="midias-edit-section" class="specialized-section" style="display: none;">
+                    <h2>Voluntários de Mídias</h2>
+                    <p class="info-message">Você pode modificar as funções de Telão e Stories.</p>
+                    
+                    <div class="midias-roles-container">
+                        <div class="midias-role-wrapper">
+                            <h3>Voluntários de Telão (Mínimo 1)</h3>
+                            <div id="voluntarios-telao-edit" class="volunteer-checkbox-list"></div>
+                        </div>
+                        <div class="midias-role-wrapper">
+                            <h3>Voluntários de Stories (Pode ser mais de 1)</h3>
+                            <div id="voluntarios-stories-edit" class="volunteer-checkbox-list"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary btn-submit">Salvar Alterações</button>
+                    <button type="button" id="btn-deletar-escala" class="btn btn-secondary btn-danger">Deletar Escala</button>
                 </div>
             </form>
             <div id="feedback-message" class="feedback-message" style="display: none;"></div>

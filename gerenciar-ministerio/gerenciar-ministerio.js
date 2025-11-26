@@ -66,17 +66,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         dashboardContent.style.display = 'block';
     }
     
+    // --- LÓGICA DE DELEÇÃO (AGORA USANDO ROTA LIMPA) ---
     proximasEscalasList.addEventListener('click', async (e) => {
         const deleteButton = e.target.closest('.btn-delete-schedule');
         if (deleteButton) {
             const escalaId = deleteButton.dataset.escalaId;
             if (confirm('Tem certeza que deseja excluir esta escala?')) {
                 try {
+                    // CORREÇÃO: Chamando a rota explícita /turno/:escalaId
                     const response = await fetch(`${API_URL}/api/escalas/turno/${escalaId}`, {
                         method: 'DELETE',
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
-                    if (!response.ok) throw new Error('Falha ao excluir.');
+                    
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.msg || `Falha ao excluir. Status: ${response.status}`);
+                    }
+                    
+                    alert('Exclusão realizada com sucesso!');
                     deleteButton.closest('.schedule-item').remove();
                 } catch (err) {
                     alert(err.message);

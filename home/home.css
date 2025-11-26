@@ -122,8 +122,65 @@ body {
 .notifications-header { padding: 16px; border-bottom: 1px solid var(--cor-borda); }
 .notifications-header h3 { margin: 0; font-size: 1rem; font-weight: 600; }
 .notifications-list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
-.notification-item { padding: 16px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--cor-borda); font-size: 0.9rem; color: var(--cor-texto-secundario); }
-.notification-item-empty { padding: 24px; text-align: center; color: var(--cor-texto-secundario); font-size: 0.9rem; }
+
+/* ESTILOS MODIFICADOS PARA O ITEM DE NOTIFICAÇÃO (PARA O BOTÃO DE EXCLUSÃO) */
+.notification-item { 
+    padding: 16px; 
+    display: flex; /* Tornar o item um flex container */
+    justify-content: space-between; /* Espaço entre o conteúdo e o botão */
+    align-items: flex-start;
+    gap: 12px; 
+    border-bottom: 1px solid var(--cor-borda); 
+    font-size: 0.9rem; 
+    color: var(--cor-texto-secundario); 
+    cursor: pointer; /* Indica que é clicável (para o link) */
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+/* Estilo para o wrapper do conteúdo para manter o ícone e o texto juntos */
+.notification-item .notification-content-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    flex-grow: 1; /* Ocupa o espaço restante */
+}
+.notification-item:hover {
+    background-color: var(--cor-fundo); /* Leve destaque ao passar o mouse */
+}
+.notification-item.unread {
+    background-color: #f7f9fd; /* Fundo leve para não lidas */
+    border-left: 4px solid var(--cor-primaria); /* Linha lateral */
+    padding-left: 12px;
+}
+
+.notification-item-empty { 
+    padding: 24px; 
+    text-align: center; 
+    color: var(--cor-texto-secundario); 
+    font-size: 0.9rem; 
+}
+
+/* NOVO: Estilo para o botão de exclusão */
+.delete-notification-btn {
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 4px; /* Pequeno padding para facilitar o clique */
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+    margin-top: -4px; /* Ajuste fino de posição */
+    flex-shrink: 0; /* Não permite que encolha */
+}
+
+.delete-notification-btn:hover {
+    opacity: 1;
+    color: #E53935; /* Cor de perigo ao passar o mouse */
+}
+
 
 /* Link "Ver todas as escalas" */
 .view-all-schedules-link { text-align: center; margin: -8px 0 20px 0; }

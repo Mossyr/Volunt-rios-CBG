@@ -21,7 +21,8 @@
                         <label for="escala-data">Data</label>
                         <input type="date" id="escala-data" required>
                     </div>
-                    <div class="input-group">
+                    
+                    <div class="input-group" id="turno-input-group">
                         <label for="escala-turno">Turno</label>
                         <select id="escala-turno" required>
                             <option value="" disabled selected>Selecione um turno</option>
@@ -29,13 +30,51 @@
                             <option value="Noite">Noite</option>
                         </select>
                     </div>
-                </div>
+
+                    <div class="input-group" id="modalidade-input-group" style="display: none;">
+                        <label for="escala-modalidade">Modalidade de Escala</label>
+                        <select id="escala-modalidade">
+                            <option value="padrao" selected>Padrão (Gravação/Evento Semanal)</option>
+                            </select>
+                    </div>
+                    </div>
+                
                 <div class="card">
                     <h2>Selecione os Voluntários</h2>
-                    <div id="volunteers-list">
-                        <p class="info-message">Selecione uma data para ver os voluntários disponíveis.</p>
+                    
+                    <div id="dynamic-volunteers-selection">
+                        <div id="volunteers-list">
+                            <p class="info-message">Selecione uma data para ver os voluntários disponíveis.</p>
+                        </div>
+
+                        <div id="comunicacao-volunteers" style="display: none;">
+                            <div class="input-group">
+                                <label for="comunicador-avisos">Comunicador de Avisos</label>
+                                <select id="comunicador-avisos" required>
+                                    <option value="" disabled selected>Selecione o Voluntário</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="comunicador-ofertas">Comunicador de Ofertas (e Oração)</label>
+                                <select id="comunicador-ofertas" required>
+                                    <option value="" disabled selected>Selecione o Voluntário</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="midias-volunteers" style="display: none;">
+                            <div class="input-group">
+                                <label>Voluntários de Telão (Mínimo 1)</label>
+                                <div id="voluntarios-telao" class="volunteer-checkbox-list"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Voluntários de Stories (Pode ser mais de 1)</label>
+                                <div id="voluntarios-stories" class="volunteer-checkbox-list"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    </div>
+
                 <button type="submit" class="btn btn-primary btn-full">Salvar Escala</button>
             </form>
         </main>

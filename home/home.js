@@ -114,10 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- CÓDIGO ANTIGO E QUEBRADO REMOVIDO DAQUI ---
-    // O bloco de código que estava aqui foi removido porque pertencia à versão antiga
-    // do painel do líder e estava causando o erro.
-    
     function setupContextSwitcher() {
         const contextBtns = document.querySelectorAll('.context-btn');
         const contentPanels = document.querySelectorAll('.content-panel');
@@ -155,7 +151,48 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Erro de conexão ao buscar notificações:", error);
         }
     }
+    
+    // NOVO: Função para excluir notificação
+    async function deleteNotification(notificationId, listItemElement) {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
 
+        if (!confirm('Tem certeza que deseja excluir esta notificação?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/api/notificacoes/${notificationId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.ok) {
+                // Remove o elemento da lista no HTML
+                listItemElement.remove();
+                // Atualiza a contagem de notificações não lidas
+                const unreadCount = parseInt(notificationCounter.textContent || '0');
+                if (listItemElement.classList.contains('unread') && unreadCount > 0) {
+                    const newCount = unreadCount - 1;
+                    notificationCounter.textContent = newCount;
+                    if (newCount === 0) {
+                        notificationCounter.style.display = 'none';
+                    }
+                }
+                // Se a lista ficar vazia, adiciona o item "Nenhuma notificação"
+                 if (notificationsList.children.length === 0) {
+                    notificationsList.innerHTML = '<li class="notification-item-empty">Nenhuma notificação por aqui.</li>';
+                }
+            } else {
+                console.error("Falha ao excluir notificação:", await response.text());
+                alert("Não foi possível excluir a notificação.");
+            }
+        } catch (error) {
+            console.error("Erro de conexão ao excluir notificação:", error);
+            alert("Erro de conexão ao excluir a notificação.");
+        }
+    }
+    
     function renderNotifications(notifications) {
         const unreadCount = notifications.filter(n => !n.read).length;
         if (unreadCount > 0) {
@@ -176,12 +213,67 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('li');
             item.className = 'notification-item';
             if (!notification.read) item.classList.add('unread');
-            const fromUserName = notification.fromUser ? notification.fromUser.nome : 'Sistema';
+            
+            // --- CORREÇÃO: Renderização do conteúdo da notificação ---
+            let iconHTML = '';
             let contentHTML = '';
-            // Seu switch case para os tipos de notificação continua aqui
-            // ...
-            item.innerHTML = contentHTML;
+
+            const fromUserName = notification.fromUser ? notification.fromUser.nome : 'Sistema';
+            const timeAgo = new Date(notification.createdAt).toLocaleDateString('pt-BR');
+
+            switch (notification.type) {
+                case 'SWAP_REQUEST':
+                    iconHTML = '<svg class="icon-swap" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>';
+                    // Usamos a mensagem crua do banco de dados (que pode ter <strong>)
+                    contentHTML = `
+                        <div class="notification-icon">${iconHTML}</div>
+                        <div>
+                            <p><strong>Troca Pendente:</strong> ${notification.message}</p>
+                            <span class="notification-time">De: ${fromUserName} · ${timeAgo}</span>
+                        </div>
+                    `;
+                    // Adiciona um listener para levar para a página de troca (você precisa implementar o detalhe-troca)
+                    item.addEventListener('click', () => {
+                        if (notification.relatedId) {
+                            window.location.href = `../trocas/detalhe-troca.html?trocaId=${notification.relatedId}`;
+                        }
+                    });
+                    break;
+                case 'GENERAL':
+                default:
+                    iconHTML = '<svg class="icon-info" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6A5ACD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>';
+                     contentHTML = `
+                        <div class="notification-icon">${iconHTML}</div>
+                        <div>
+                            <p><strong>Aviso Geral:</strong> ${notification.message}</p>
+                            <span class="notification-time">${timeAgo}</span>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            // NOVO: Cria o botão de exclusão
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-notification-btn';
+            deleteButton.innerHTML = '×'; // Símbolo "X"
+            deleteButton.title = 'Excluir notificação';
+            
+            // NOVO: Adiciona o listener para o botão de exclusão
+            deleteButton.addEventListener('click', (e) => {
+                e.stopPropagation(); // Impede a propagação para o 'item' (que tem o link)
+                deleteNotification(notification._id, item);
+            });
+            
+            // O conteúdo da notificação (icon e texto) é criado aqui
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = contentHTML;
+            contentDiv.classList.add('notification-content-wrapper');
+
+            item.appendChild(contentDiv);
+            item.appendChild(deleteButton); // Adiciona o botão de exclusão
+            
             notificationsList.appendChild(item);
+            // --- FIM DA CORREÇÃO ---
         });
     }
 

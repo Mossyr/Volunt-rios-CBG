@@ -1,0 +1,151 @@
+/* detalhe-troca.css (VERSÃO REESTILIZADA E CONCISA) */
+
+@import url('../css/base.css');
+
+/* --- Variáveis e Estilos base (Baseado em home.css e criar-escala.css) --- */
+
+.main-content {
+    padding: 20px;
+}
+.app-container {
+    max-width: 600px; /* Largura ideal para um detalhe */
+    margin: 0 auto;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cor-texto-principal);
+}
+
+/* --- Card Principal de Detalhes --- */
+.card-swap-details {
+    background-color: var(--cor-fundo-card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
+}
+
+.swap-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.swap-status-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin: 0;
+}
+
+/* --- Status Tag (Padrão Home/Perfil) --- */
+.status-tag {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+}
+
+.status-pending { background-color: var(--cor-alerta); color: var(--cor-texto-principal); } /* Amarelo/Laranja */
+.status-accepted { background-color: var(--cor-sucesso); } /* Verde */
+.status-rejected { background-color: var(--cor-perigo); } /* Vermelho */
+
+
+hr {
+    border: none;
+    border-top: 1px solid var(--cor-borda);
+    margin: 20px 0;
+}
+
+/* --- Grupos de Detalhes (Baseado em home.css detail-item) --- */
+.detail-group {
+    padding: 16px 0;
+}
+.detail-group h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin-bottom: 12px;
+    border-left: 3px solid var(--cor-primaria);
+    padding-left: 10px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px dashed var(--cor-borda);
+    color: var(--cor-texto-secundario);
+}
+.detail-item:last-child {
+    border-bottom: none;
+}
+.detail-item strong {
+    font-weight: 500;
+    color: var(--cor-texto-principal);
+}
+.detail-item svg {
+    color: var(--cor-primaria); /* Cor do ícone */
+    flex-shrink: 0;
+}
+
+/* --- Ações e Mensagens --- */
+.swap-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.btn {
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background-color: var(--cor-sucesso);
+    color: white;
+}
+.btn-danger {
+    background-color: var(--cor-perigo);
+    color: white;
+}
+.btn-success:hover { background-color: #388E3C; }
+.btn-danger:hover { background-color: #D32F2F; }
+
+.action-message {
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 10px;
+    text-align: center;
+}
+.action-message.success { background-color: #E8F5E9; color: #388E3C; }
+.action-message.error { background-color: #FBEAEA; color: #E53935; }
+
+
+/* --- Loader/Error (Reutilizando estilos globais) --- */
+.loader {
+    /* Estilo do loader (importado do base.css ou perfil.css) */
+    margin: 50px auto;
+}
+.error-message {
+    text-align: center;
+    color: var(--cor-perigo);
+    font-weight: 600;
+    padding: 20px;
+}

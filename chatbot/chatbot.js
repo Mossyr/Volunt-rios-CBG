@@ -210,4 +210,3 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeChat();
 });
-
