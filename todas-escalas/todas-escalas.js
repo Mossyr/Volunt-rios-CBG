@@ -1,7 +1,8 @@
+// todas-escalas.js
 document.addEventListener('DOMContentLoaded', async () => {
     const escalasListDiv = document.getElementById('public-escalas-list');
     const filtersDiv = document.getElementById('ministry-filters');
-    const API_URL = 'https://back-end-volunt-rios.onrender.com';
+    const API_URL = 'http://localhost:5000';
     const token = localStorage.getItem('authToken');
 
     if (!token) {
@@ -9,41 +10,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    let allEscalas = []; // Guarda todas as escalas para filtrar no front-end
-    let userMinistries = []; // Guarda os ministérios do usuário
+    let allEscalas = []; 
+    let userMinistries = [];
 
     try {
-        // Busca os dados do usuário para pegar os ministérios
+        // 1. Pega os ministérios do usuário para montar os filtros
         const userResponse = await fetch(`${API_URL}/api/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!userResponse.ok) throw new Error('Erro ao buscar dados do usuário.');
+        if (!userResponse.ok) throw new Error('Erro ao buscar dados.');
         const user = await userResponse.json();
         userMinistries = user.ministerios.map(m => m.ministerio);
         
-        // **NOVA ROTA NECESSÁRIA NO BACK-END**
-        // Esta rota deve retornar todas as escalas futuras dos ministérios do usuário
+        // 2. Pega todas as escalas públicas
         const response = await fetch(`${API_URL}/api/escalas/publicas`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        if (!response.ok) {
-            throw new Error('Erro ao buscar as escalas.');
-        }
+        if (!response.ok) throw new Error('Erro ao buscar escalas.');
 
         allEscalas = await response.json();
+        
         setupFilters(userMinistries);
         displayEscalas(allEscalas);
 
     } catch (error) {
         console.error("Erro:", error);
-        escalasListDiv.innerHTML = `<p class="error-message">${error.message}</p>`;
+        escalasListDiv.innerHTML = `
+            <div class="empty-card">
+                <i class="ph ph-warning-circle" style="font-size: 2rem; margin-bottom: 10px; color: #ef4444;"></i>
+                <p>Não foi possível carregar as escalas.</p>
+            </div>`;
     }
 
     function setupFilters(ministries) {
-        if (ministries.length <= 1) return; // Não mostra filtros se só participa de 1 ministério
+        filtersDiv.innerHTML = '';
 
-        filtersDiv.innerHTML = '<button class="filter-btn active" data-id="all">Todos</button>';
+        // Botão "Todos"
+        const btnAll = document.createElement('button');
+        btnAll.className = 'filter-btn active';
+        btnAll.dataset.id = 'all';
+        btnAll.textContent = 'Todos';
+        filtersDiv.appendChild(btnAll);
+
+        // Botões dos Ministérios
         ministries.forEach(min => {
             const btn = document.createElement('button');
             btn.className = 'filter-btn';
@@ -54,55 +64,93 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         filtersDiv.addEventListener('click', (e) => {
             if (e.target.classList.contains('filter-btn')) {
-                // Desmarca o botão antigo e marca o novo
-                filtersDiv.querySelector('.active').classList.remove('active');
+                filtersDiv.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
 
                 const filterId = e.target.dataset.id;
-                if (filterId === 'all') {
-                    displayEscalas(allEscalas);
-                } else {
-                    const filteredEscalas = allEscalas.filter(escala => escala.ministerio._id === filterId);
-                    displayEscalas(filteredEscalas);
-                }
+                
+                // Efeito visual de troca
+                escalasListDiv.style.opacity = '0.5';
+                setTimeout(() => {
+                    if (filterId === 'all') {
+                        displayEscalas(allEscalas);
+                    } else {
+                        const filteredEscalas = allEscalas.filter(escala => escala.ministerio._id === filterId);
+                        displayEscalas(filteredEscalas);
+                    }
+                    escalasListDiv.style.opacity = '1';
+                }, 200);
             }
         });
     }
 
     function displayEscalas(escalas) {
-        const loader = escalasListDiv.querySelector('.loader');
-        if (loader) loader.remove();
-
         escalasListDiv.innerHTML = '';
 
         if (escalas.length === 0) {
-            escalasListDiv.innerHTML = '<div class="card"><p>Nenhuma escala encontrada para os seus ministérios.</p></div>';
+            escalasListDiv.innerHTML = `
+                <div class="empty-card">
+                    <i class="ph ph-calendar-x" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
+                    <p>Nenhuma escala encontrada para este filtro.</p>
+                </div>`;
             return;
         }
 
-        escalas.forEach(escala => {
-            const dataFormatada = new Date(escala.data).toLocaleDateString('pt-BR', {
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long',
-                timeZone: 'UTC'
-            });
+        // Ordenar por data
+        escalas.sort((a, b) => new Date(a.data) - new Date(b.data));
 
-            // Mapeia os voluntários para mostrar os nomes
-            const volunteersHtml = escala.voluntarios.map(vol => `<li>${vol.nome}</li>`).join('');
+        escalas.forEach(escala => {
+            const dataObj = new Date(escala.data);
+            const dia = dataObj.getUTCDate();
+            const mes = dataObj.toLocaleDateString('pt-BR', { month: 'short', timeZone: 'UTC' }).replace('.', '');
+            const diaSemana = dataObj.toLocaleDateString('pt-BR', { weekday: 'long', timeZone: 'UTC' });
+            const diaSemanaCapitalized = diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1);
+
+            // --- AQUI ESTAVA O ERRO ---
+            // Agora tratamos a estrutura nova e velha
+            const volunteersHtml = escala.voluntarios.map(vol => {
+                // Tenta pegar o nome de várias formas possíveis
+                let nome = 'Voluntário';
+                
+                // Caso 1: Novo formato (Objeto com 'usuario' populado ou direto no root se o backend "achatou")
+                if (vol.nome) {
+                    nome = vol.nome;
+                } else if (vol.usuario && vol.usuario.nome) {
+                    nome = vol.usuario.nome;
+                }
+                
+                const primeiroNome = nome.split(' ')[0];
+                
+                return `
+                <div class="volunteer-chip">
+                    <i class="ph ph-user chip-icon"></i> ${primeiroNome}
+                </div>
+            `}).join('');
 
             const card = document.createElement('div');
             card.className = 'escala-card';
             card.innerHTML = `
                 <div class="card-header">
-                    <h2>${dataFormatada}</h2>
-                    <span class="ministry-tag">${escala.ministerio.nome}</span>
+                    <div class="date-badge">
+                        <span class="date-day">${dia}</span>
+                        <span class="date-month">${mes}</span>
+                    </div>
+                    <div class="header-info">
+                        <span class="ministry-tag">
+                            <i class="ph ph-users-three"></i> ${escala.ministerio.nome}
+                        </span>
+                        <h2 class="escala-weekday">${diaSemanaCapitalized}</h2>
+                        <div class="escala-shift">
+                            <i class="ph ph-clock"></i>
+                            ${escala.turno}
+                        </div>
+                    </div>
                 </div>
-                <div class="escala-details">
-                    <p><strong>Turno:</strong> ${escala.turno}</p>
-                    <div class="volunteers-list">
-                        <strong>Escalados:</strong>
-                        <ul>${volunteersHtml || '<li>Ninguém escalado.</li>'}</ul>
+
+                <div class="volunteers-section">
+                    <span class="volunteers-label">Time Escalado:</span>
+                    <div class="volunteers-chips">
+                        ${volunteersHtml || '<span style="font-size:0.85rem; color:#94a3b8;">Ainda sem voluntários.</span>'}
                     </div>
                 </div>
             `;

@@ -2,40 +2,88 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gerenciar Ministério | Voluntários</title>
-    <link rel="stylesheet" href="../css/base.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gerenciar-ministerio.css">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="page-header">
-            <a href="../home/home.html" class="back-button" aria-label="Voltar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <a href="../lideranca/painel-lideranca.html" class="back-button glass-effect" aria-label="Voltar">
+                <i class="ph ph-caret-left"></i>
             </a>
-            <h1 id="ministry-name-header">Carregando...</h1>
+            <div class="header-content">
+                <span class="header-subtitle">Gestão do Ministério</span>
+                <h1 id="ministry-name-header">Carregando...</h1>
+            </div>
         </header>
 
         <main>
-            <div class="loader"></div>
-            <div id="dashboard-content" style="display: none;">
-                <div class="card actions-grid">
-                    <a id="link-criar-escala" href="/criar-escalas/criar-escala.html" class="action-item">Criar Escala</a>
-                    <a id="link-aprovar" href="/gerenciar/pendentes.html" class="action-item">Aprovar Voluntários</a>
-                </div>
+            <div class="loader-container" id="main-loader">
+                <i class="ph ph-spinner-gap ph-spin"></i>
+            </div>
 
-                <div class="card">
-                    <h2>Próximas Escalas</h2>
-                    <div id="proximas-escalas-list"></div>
-                </div>
+            <div id="dashboard-content" class="dashboard-grid" style="display: none;">
+                
+                <section class="actions-section">
+                    <a id="link-criar-escala" href="#" class="action-card create">
+                        <div class="icon-circle"><i class="ph ph-calendar-plus"></i></div>
+                        <span class="action-title">Nova Escala</span>
+                        <span class="action-desc">Agendar voluntários</span>
+                    </a>
+                    <a id="link-aprovar" href="#" class="action-card approve">
+                        <div class="icon-circle"><i class="ph ph-user-check"></i></div>
+                        <span class="action-title">Aprovações</span>
+                        <span class="action-desc">Gerir pendências</span>
+                    </a>
+                </section>
 
-                <div class="card">
-                    <h2>Voluntários do Ministério</h2>
-                    <ul id="voluntarios-list" class="volunteers-list"></ul>
-                </div>
+                <section class="content-section">
+                    <div class="section-header">
+                        <h3>Próximas Escalas</h3>
+                        <span class="badge-count" id="count-escalas">0</span>
+                    </div>
+                    <div id="proximas-escalas-list" class="schedules-list">
+                        </div>
+                </section>
+
+                <section class="content-section">
+                    <div class="section-header">
+                        <h3>Equipe</h3>
+                        <span class="badge-count" id="count-voluntarios">0</span>
+                    </div>
+                    <div class="volunteers-card glass-effect">
+                        <ul id="voluntarios-list" class="volunteers-list">
+                            </ul>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
+
+    <nav class="bottom-nav-island">
+        <a href="../home/home.html" class="nav-item">
+            <i class="ph ph-house"></i>
+        </a>
+        <a href="../disponibilidade/disponibilidade.html" class="nav-item">
+            <i class="ph ph-calendar-check"></i>
+        </a>
+        <a href="../todas-escalas/todas-escalas.html" class="nav-item">
+            <i class="ph ph-list-dashes"></i>
+        </a>
+        <a href="../assistente/assistente.html" class="nav-item">
+            <i class="ph ph-chat-teardrop-text"></i>
+        </a>
+        <a href="../perfil/perfil.html" class="nav-item">
+            <i class="ph ph-user-circle"></i>
+        </a>
+    </nav>
+    
     <script src="gerenciar-ministerio.js"></script>
 </body>
 </html>

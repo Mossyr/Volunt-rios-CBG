@@ -2,84 +2,148 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Criar Escala | Painel</title>
-    <link rel="stylesheet" href="../css/base.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="criar-escala.css">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="page-header">
-            <a id="back-link" href="#" class="back-button">&larr; Voltar</a>
-            <h1>Criar Nova Escala</h1>
-            <p id="ministry-name-header">Carregando...</p>
+            <a id="back-link" href="#" class="back-button glass-effect" aria-label="Voltar">
+                <i class="ph ph-caret-left"></i>
+            </a>
+            <div class="header-content">
+                <span class="header-subtitle">Novo Agendamento</span>
+                <h1 id="ministry-name-header">Carregando...</h1>
+            </div>
         </header>
+
         <main>
             <form id="create-escala-form">
-                <div class="card">
-                    <div class="input-group">
-                        <label for="escala-data">Data</label>
-                        <input type="date" id="escala-data" required>
-                    </div>
-                    
-                    <div class="input-group" id="turno-input-group">
-                        <label for="escala-turno">Turno</label>
-                        <select id="escala-turno" required>
-                            <option value="" disabled selected>Selecione um turno</option>
-                            <option value="Manhã">Manhã</option>
-                            <option value="Noite">Noite</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group" id="modalidade-input-group" style="display: none;">
-                        <label for="escala-modalidade">Modalidade de Escala</label>
-                        <select id="escala-modalidade">
-                            <option value="padrao" selected>Padrão (Gravação/Evento Semanal)</option>
-                            </select>
-                    </div>
-                    </div>
                 
-                <div class="card">
-                    <h2>Selecione os Voluntários</h2>
-                    
-                    <div id="dynamic-volunteers-selection">
-                        <div id="volunteers-list">
-                            <p class="info-message">Selecione uma data para ver os voluntários disponíveis.</p>
+                <section class="form-section">
+                    <h2 class="section-title"><i class="ph ph-calendar-plus"></i> Dados da Escala</h2>
+                    <div class="card-form glass-effect">
+                        
+                        <div class="input-group">
+                            <label for="escala-data">Data do Evento</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-calendar-blank"></i>
+                                <input type="date" id="escala-data" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-row">
+                            <div class="input-group" id="turno-input-group">
+                                <label for="escala-turno">Turno</label>
+                                <div class="select-wrapper">
+                                    <i class="ph ph-clock"></i>
+                                    <select id="escala-turno" required>
+                                        <option value="" disabled selected>Selecione</option>
+                                        <option value="Manhã">Manhã</option>
+                                        <option value="Noite">Noite</option>
+                                    </select>
+                                    <i class="ph ph-caret-down arrow"></i>
+                                </div>
+                            </div>
+
+                            <div class="input-group" id="modalidade-input-group" style="display: none;">
+                                <label for="escala-modalidade">Modalidade</label>
+                                <div class="select-wrapper">
+                                    <i class="ph ph-list-checks"></i>
+                                    <select id="escala-modalidade">
+                                        <option value="padrao" selected>Padrão</option>
+                                    </select>
+                                    <i class="ph ph-caret-down arrow"></i>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="comunicacao-volunteers" style="display: none;">
-                            <div class="input-group">
-                                <label for="comunicador-avisos">Comunicador de Avisos</label>
-                                <select id="comunicador-avisos" required>
-                                    <option value="" disabled selected>Selecione o Voluntário</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <label for="comunicador-ofertas">Comunicador de Ofertas (e Oração)</label>
-                                <select id="comunicador-ofertas" required>
-                                    <option value="" disabled selected>Selecione o Voluntário</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="midias-volunteers" style="display: none;">
-                            <div class="input-group">
-                                <label>Voluntários de Telão (Máximo 1)</label>
-                                <div id="voluntarios-telao" class="volunteer-checkbox-list"></div>
-                            </div>
-                            <div class="input-group">
-                                <label>Voluntários de Stories (Pode ser mais de 1)</label>
-                                <div id="voluntarios-stories" class="volunteer-checkbox-list"></div>
-                            </div>
-                        </div>
                     </div>
-                    </div>
+                </section>
+                
+                <section class="form-section">
+                    <h2 class="section-title"><i class="ph ph-users-three"></i> Montar Equipe</h2>
+                    <div class="card-form glass-effect">
+                        
+                        <div id="dynamic-volunteers-selection">
+                            
+                            <div id="empty-state-volunteers" class="empty-state">
+                                <i class="ph ph-calendar-dots"></i>
+                                <p>Selecione uma data acima para carregar a disponibilidade dos voluntários.</p>
+                            </div>
 
-                <button type="submit" class="btn btn-primary btn-full">Salvar Escala</button>
+                            <div id="volunteers-list" class="volunteers-grid" style="display: none;">
+                                </div>
+
+                            <div id="comunicacao-volunteers" style="display: none;">
+                                <div class="input-group">
+                                    <label>Avisos</label>
+                                    <div class="select-wrapper">
+                                        <i class="ph ph-megaphone"></i>
+                                        <select id="comunicador-avisos"><option value="" disabled selected>Escolher...</option></select>
+                                        <i class="ph ph-caret-down arrow"></i>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Ofertas e Oração</label>
+                                    <div class="select-wrapper">
+                                        <i class="ph ph-hands-praying"></i>
+                                        <select id="comunicador-ofertas"><option value="" disabled selected>Escolher...</option></select>
+                                        <i class="ph ph-caret-down arrow"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="midias-volunteers" style="display: none;">
+                                <div class="role-group">
+                                    <label class="role-label"><i class="ph ph-monitor-play"></i> Telão (Mín. 1)</label>
+                                    <div id="voluntarios-telao" class="volunteers-grid"></div>
+                                </div>
+                                <div class="role-group">
+                                    <label class="role-label"><i class="ph ph-instagram-logo"></i> Stories</label>
+                                    <div id="voluntarios-stories" class="volunteers-grid"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+
+                <div class="action-footer">
+                    <button type="submit" class="btn-primary-large">
+                        <i class="ph ph-check-circle"></i> Confirmar Escala
+                    </button>
+                </div>
+
             </form>
         </main>
     </div>
+
+    <nav class="bottom-nav-island">
+        <a href="../home/home.html" class="nav-item">
+            <i class="ph ph-house"></i>
+        </a>
+        <a href="../disponibilidade/disponibilidade.html" class="nav-item">
+            <i class="ph ph-calendar-check"></i>
+        </a>
+        <a href="../todas-escalas/todas-escalas.html" class="nav-item">
+            <i class="ph ph-list-dashes"></i>
+        </a>
+        <a href="../assistente/assistente.html" class="nav-item">
+            <i class="ph ph-chat-teardrop-text"></i>
+        </a>
+        <a href="../perfil/perfil.html" class="nav-item">
+            <i class="ph ph-user-circle"></i>
+        </a>
+    </nav>
+
     <script src="criar-escala.js"></script>
 </body>
-
 </html>

@@ -2,104 +2,125 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Home | Voluntários</title>
     <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="../chatbot/chatbot.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/rodape.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="home-header">
-            <div class="user-greeting">
-                <p>Bem-vindo(a) de volta,</p>
-                <h1 id="user-name">...</h1>
+            <div class="header-content">
+                <div class="user-greeting">
+                    <span class="greeting-time">Olá,</span>
+                    <h1 id="user-name">Voluntário</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="notification-bell" class="notification-bell" aria-label="Notificações">
+                        <i class="ph ph-bell"></i>
+                        <span id="notification-counter" class="notification-counter" style="display: none;"></span>
+                    </button>
+                </div>
             </div>
-            <div class="header-actions">
-                <button id="notification-bell" class="notification-bell" aria-label="Notificações">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <span id="notification-counter" class="notification-counter" style="display: none;"></span>
-                </button>
+            
+            <div id="context-switcher" class="context-switcher" style="display: none;">
+                <button class="context-btn active" data-panel="volunteer-panel">Minhas Escalas</button>
+                <a href="/lideranca/painel-lideranca.html" class="context-btn" id="btn-lideranca">Liderança</a>
             </div>
         </header>
 
         <div id="notifications-panel" class="notifications-panel">
             <div class="notifications-header">
                 <h3>Notificações</h3>
+                <button class="close-notif"><i class="ph ph-x"></i></button>
             </div>
             <ul id="notifications-list" class="notifications-list">
-                <li class="notification-item-empty">Nenhuma notificação por aqui.</li>
+                <li class="notification-item-empty">Tudo limpo por aqui! ✨</li>
             </ul>
         </div>
 
         <main class="home-content">
-            <div id="context-switcher" class="context-switcher" style="display: none;">
-                <button class="context-btn active" data-panel="volunteer-panel">Minhas Escalas</button>
-                <button class="context-btn" data-panel="leader-panel-content">Liderança</button>
-            </div>
-
             <div id="volunteer-panel" class="content-panel active">
-                <div class="card card-commitment">
+                
+                <div class="card card-commitment glass-effect">
+                    <div class="card-status-strip"></div>
                     <div class="card-header">
-                        <h2>Próximo Compromisso</h2>
-                        <span class="ministry-tag">Carregando...</span>
+                        <span class="ministry-badge" id="ministry-tag">
+                            <i class="ph ph-users-three"></i> <span class="tag-text">Carregando...</span>
+                        </span>
+                        <span class="next-label">Próxima Escala</span>
                     </div>
-                    <div class="commitment-details">
-                        <div class="detail-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            <span id="commitment-date">Carregando data...</span>
+                    
+                    <div class="commitment-main">
+                        <div class="date-box">
+                            <span class="date-day" id="date-day">--</span>
+                            <span class="date-month" id="date-month">--</span>
                         </div>
-                        <div class="detail-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span id="commitment-shift">Carregando horário...</span>
+                        <div class="info-box">
+                            <h2 id="commitment-weekday">Carregando...</h2>
+                            <div class="time-row">
+                                <i class="ph ph-clock"></i>
+                                <span id="commitment-shift">--:--</span>
+                            </div>
                         </div>
                     </div>
+
                     <div class="card-actions">
-                        <button class="btn btn-secondary btn-view-schedule">Ver escala</button>
-                        <button class="btn btn-primary btn-request-swap">Solicitar troca</button>
+                        <button class="btn btn-primary btn-view-schedule">
+                            <span>Ver Detalhes</span>
+                            <i class="ph ph-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-icon btn-request-swap" aria-label="Trocar">
+                            <i class="ph ph-arrows-left-right"></i>
+                        </button>
                     </div>
                 </div>
-                 <div class="view-all-schedules-link">
-                    <a href="../escalas/escalas.html">Ver todas as minhas escalas &rarr;</a>
+
+                <div class="quick-links">
+                     <a href="../escalas/escalas.html" class="link-item">
+                        Ver calendário completo
+                        <i class="ph ph-caret-right"></i>
+                     </a>
                 </div>
-                 <div class="card">
-                    <h2>Avisos</h2>
-                    <p>Nenhum aviso importante no momento.</p>
+
+                 <div class="card card-avisos">
+                    <div class="aviso-icon">
+                        <i class="ph ph-megaphone-simple"></i>
+                    </div>
+                    <div class="aviso-content">
+                        <h2>Mural de Avisos</h2>
+                        <p>Nenhum aviso importante no momento.</p>
+                    </div>
                 </div>
             </div>
 
             <div id="leader-panel-content" class="content-panel">
-            </div>
+                </div>
         </main>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="../home/home.html" class="nav-item active" aria-label="Início">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Início</span>
+    <nav class="bottom-nav-island">
+        <a href="../home/home.html" class="nav-item active">
+            <i class="ph ph-house-fill"></i>
         </a>
-        <a href="../disponibilidade/disponibilidade.html" class="nav-item" aria-label="Disponibilidade">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"></path><path d="m9 16 2 2 4-4"></path></svg>
-            <span>Disponib.</span>
+        <a href="../disponibilidade/disponibilidade.html" class="nav-item">
+            <i class="ph ph-calendar-check"></i>
         </a>
-        <a href="../todas-escalas/todas-escalas.html" class="nav-item" aria-label="Minhas Escalas">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <span>Escalas</span>
+        <a href="../todas-escalas/todas-escalas.html" class="nav-item">
+            <i class="ph ph-list-dashes"></i>
         </a>
-        <a href="../assistente/assistente.html" class="nav-item" aria-label="Assistente Virtual">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8L8 8.02A6.01 6.01 0 0 0 8 16.5c0 .35.03.68.08.99A5.49 5.49 0 0 0 12 22a5.5 5.5 0 0 0 4-10.5V8h-4z"></path><path d="M20.9 18.27A6.01 6.01 0 0 0 16 8h-4v8.5a5.5 5.5 0 1 0 8.9 4.77Z"></path></svg>
-            <span>Assistente</span>
+        <a href="../assistente/assistente.html" class="nav-item">
+            <i class="ph ph-chat-teardrop-text"></i>
         </a>
-        <a href="../perfil/perfil.html" class="nav-item" aria-label="Meu Perfil">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Perfil</span>
+        <a href="../perfil/perfil.html" class="nav-item">
+            <i class="ph ph-user-circle"></i>
         </a>
     </nav>
     
     <script src="home.js"></script>
-    <script src="../chatbot/chatbot.js"></script>
 </body>
 </html>

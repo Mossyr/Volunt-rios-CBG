@@ -2,41 +2,70 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Solicitar Troca | Voluntários</title>
-    <link rel="stylesheet" href="../css/base.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="solicitar-troca.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="page-header">
-            <a href="../home/home.html" class="back-button" aria-label="Voltar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <a href="../home/home.html" class="back-button glass-effect" aria-label="Voltar">
+                <i class="ph ph-caret-left"></i>
             </a>
             <h1>Solicitar Troca</h1>
         </header>
 
-        <main class="main-container">
-            <div class="loader"></div>
+        <div class="stepper-container">
+            <div class="step-indicator active" id="indicator-1">
+                <span class="step-number">1</span>
+                <span class="step-label">Escala</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-indicator" id="indicator-2">
+                <span class="step-number">2</span>
+                <span class="step-label">Voluntário</span>
+            </div>
+        </div>
 
-            <div id="step-1-choose-schedule" class="step-container active">
-                <h2>Primeiro, escolha qual escala você quer trocar:</h2>
-                <div id="my-schedules-list" class="list-container">
+        <main class="main-container">
+            <div class="loader-container" id="main-loader">
+                <i class="ph ph-spinner-gap ph-spin"></i>
+            </div>
+
+            <div id="step-1-choose-schedule" class="step-content">
+                <h2 class="step-title">Qual escala você quer trocar?</h2>
+                <div id="my-schedules-list" class="schedules-grid">
                     </div>
             </div>
 
-            <div id="step-2-choose-volunteer" class="step-container">
-                <h2 id="volunteer-step-title">Ótimo! Agora, com quem você quer falar?</h2>
-                <p id="volunteer-step-subtitle" class="subtitle">Encontramos as seguintes pessoas disponíveis para troca nesta data.</p>
-                <div id="available-volunteers-list" class="list-container">
+            <div id="step-2-choose-volunteer" class="step-content hidden">
+                <h2 class="step-title" id="volunteer-step-title">Com quem deseja trocar?</h2>
+                <p class="step-subtitle">Estas pessoas estão disponíveis nesta data.</p>
+                
+                <div id="available-volunteers-list" class="volunteers-list">
                     </div>
-                <button id="back-to-step-1" class="btn btn-secondary btn-back">Voltar</button>
+                
+                <button id="back-to-step-1" class="btn-text-back">
+                    <i class="ph ph-arrow-left"></i> Voltar e escolher outra escala
+                </button>
             </div>
             
-            <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+            <div id="feedback-message" class="feedback-card glass-effect hidden">
+                <div class="feedback-icon-box">
+                    <i class="ph ph-check" id="feedback-icon"></i>
+                </div>
+                <h3 id="feedback-title">Sucesso!</h3>
+                <p id="feedback-text">Sua solicitação foi enviada.</p>
+                <a href="../home/home.html" class="btn-primary mt-4">Voltar ao Início</a>
+            </div>
         </main>
     </div>
+    
     <script src="solicitar-troca.js"></script>
 </body>
 </html>

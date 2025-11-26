@@ -1,113 +1,291 @@
-/* criar-escala.css (CORRIGIDO E ESTILIZADO) */
-
-/* Importa a base de estilos */
+/* criar-escala.css */
 @import url('../css/base.css');
 
-/* Estilos específicos da página Criar Escala */
+:root {
+    --primary: #6366f1;
+    --primary-light: #e0e7ff;
+    --primary-dark: #4f46e5;
+    --surface: #ffffff;
+    --bg-body: #f3f4f6;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e2e8f0;
+    
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --shadow-float: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+}
 
-.time-group {
-    display: flex;
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    background-color: var(--bg-body);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0;
+    padding-bottom: 120px;
+    color: var(--text-main);
+}
+
+/* --- Fundo Mesh --- */
+.mesh-background {
+    position: fixed;
+    top: -10vh; left: 0; width: 100%; height: 50vh;
+    background: radial-gradient(circle at 10% 20%, rgb(238, 200, 255) 0%, rgb(227, 243, 255) 90%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    z-index: -1;
+}
+
+.app-container {
+    padding: 0 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.page-header {
+    padding-top: max(30px, env(safe-area-inset-top));
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+    color: white;
+}
+
+.back-button {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.2rem;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.3);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+.back-button:active { transform: scale(0.95); }
+
+.header-content { display: flex; flex-direction: column; overflow: hidden; }
+.header-subtitle { font-size: 0.85rem; opacity: 0.9; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+#ministry-name-header { margin: 0; font-size: 1.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+/* --- Formulário --- */
+.form-section { margin-bottom: 24px; }
+.section-title {
+    font-size: 0.95rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+}
+
+.card-form {
+    background: white;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+.input-group { margin-bottom: 16px; width: 100%; }
+.input-group label {
+    display: block; font-size: 0.9rem; font-weight: 600;
+    color: var(--text-main); margin-bottom: 8px;
+}
+
+/* Grid de Inputs (Data/Turno/Modalidade) */
+.grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas por padrão */
     gap: 16px;
 }
-.time-group .input-group {
-    flex: 1;
-}
 
-/* ---------------------------------------------------- */
-/* Estilos para a seleção de voluntários (Checkboxes Padrão) */
-/* ---------------------------------------------------- */
-#volunteers-list {
-    margin-top: 16px;
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 8px; /* Espaço para a barra de rolagem */
-}
-.volunteer-option {
-    display: flex;
+/* --- Inputs Customizados (Correção de Sobreposição) --- */
+.input-wrapper, .select-wrapper {
+    position: relative;
+    display: flex; 
     align-items: center;
-    padding: 12px 4px;
-    border-bottom: 1px solid var(--cor-borda);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.volunteer-option:hover {
-    background-color: var(--cor-borda);
-}
-.volunteer-option:last-child {
-    border-bottom: none;
-}
-.volunteer-option input {
-    /* Estilização básica para checkbox */
-    width: 20px;
-    height: 20px;
-    margin-right: 12px;
-    accent-color: var(--cor-primaria);
-    cursor: pointer;
-}
-.volunteer-option label {
-    font-weight: 500;
-    flex: 1;
-    cursor: pointer;
-}
-
-
-/* ---------------------------------------------------- */
-/* Estilos para as Novas Seções Dinâmicas (Mídias e Comunicação) */
-/* ---------------------------------------------------- */
-
-/* Contêiner de Checkboxes Específicos (Usado em Mídias) */
-.volunteer-checkbox-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0; /* O espaçamento já é dado pelo padding do .volunteer-option */
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    max-height: 180px;
-    overflow-y: auto;
-    margin-top: 8px;
-    background-color: var(--cor-fundo-card);
-}
-
-.volunteer-checkbox-list .volunteer-option {
-    padding: 8px 12px;
-}
-.volunteer-checkbox-list .volunteer-option:last-child {
-    border-bottom: none;
-}
-
-/* Estilização para o Select Adicionado na Comunicação */
-/* Usa a estilização de .input-group padrão, mas garante que o select se pareça com o app */
-#comunicacao-volunteers .input-group {
-    margin-bottom: 16px;
-}
-#comunicacao-volunteers select {
-    /* Herda o estilo input-group padrão */
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: white;
-    appearance: none; /* Remove o estilo padrão do SO para melhor consistência */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    background-size: 1.2em;
-    cursor: pointer;
 }
 
-/* Garante que o select de Modalidade também tenha um bom visual */
-#modalidade-input-group select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
+/* Ícone posicionado absolutamente e centralizado */
+.input-wrapper i, .select-wrapper i:first-child {
+    position: absolute; 
+    left: 16px; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted); 
+    font-size: 1.3rem; 
+    pointer-events: none;
+    z-index: 10;
+}
+
+.select-wrapper .arrow {
+    left: auto; 
+    right: 14px; 
     font-size: 1rem;
-    background-color: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Estilo unificado para Input de Data e Select */
+input[type="date"], select {
+    width: 100%;
+    /* Padding forçado para garantir espaço do ícone */
+    padding: 14px 14px 14px 55px !important; 
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-family: inherit; 
+    font-size: 1rem; 
+    color: var(--text-main);
+    background: #f9fafb;
+    
+    /* Remove estilos nativos */
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    background-size: 1.2em;
+    outline: none;
+    transition: all 0.2s;
+    
+    /* Trata textos longos */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Hack para clicar em qualquer lugar do input de data */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    opacity: 0; cursor: pointer;
+    background: transparent;
+}
+
+input[type="date"]:focus, select:focus {
+    background: white; 
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* --- Seleção de Voluntários (GRID CARD) --- */
+.volunteers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.volunteer-option input[type="checkbox"] { display: none; }
+
+.volunteer-option label {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
     cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+}
+
+.volunteer-option input:checked + label {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+}
+
+.v-avatar {
+    width: 36px; height: 36px;
+    background: #f3f4f6; color: var(--text-muted);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.volunteer-option input:checked + label .v-avatar {
+    background: var(--primary); color: white;
+}
+
+.v-info { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+.v-name { 
+    font-weight: 600; font-size: 0.95rem; 
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+}
+.v-check-icon { 
+    font-size: 1.2rem; color: transparent; 
+    transition: all 0.2s; flex-shrink: 0;
+}
+.volunteer-option input:checked + label .v-check-icon { color: var(--primary); }
+
+/* Empty State */
+.empty-state {
+    text-align: center; padding: 30px;
+    color: var(--text-muted);
+    background: #f9fafb; border-radius: 16px; border: 1px dashed var(--border-color);
+}
+.empty-state i { font-size: 2rem; margin-bottom: 8px; color: #cbd5e1; display: block; }
+.empty-state p { margin: 0; font-size: 0.9rem; }
+
+/* Blocos Específicos */
+.role-group { margin-bottom: 20px; }
+.role-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-main);
+    margin-bottom: 10px;
+}
+.role-label i { color: var(--primary); font-size: 1.1rem; }
+
+/* Botão Flutuante */
+.action-footer { margin-top: 30px; }
+.btn-primary-large {
+    width: 100%;
+    background: var(--text-main); color: white;
+    padding: 16px; border: none; border-radius: 16px;
+    font-size: 1rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+.btn-primary-large:active { transform: scale(0.98); }
+
+
+/* Navegação Flutuante */
+.bottom-nav-island {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px);
+    width: 90%; max-width: 400px; height: 70px;
+    border-radius: 24px;
+    display: flex; justify-content: space-evenly; align-items: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
+    z-index: 100;
+}
+.nav-item {
+    color: #94a3b8; font-size: 1.6rem; padding: 10px;
+    border-radius: 12px; transition: all 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+}
+
+/* --- RESPONSIVIDADE (Correção Mobile) --- */
+@media (max-width: 480px) {
+    /* Coluna única para evitar quebra de layout */
+    .grid-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    /* Padding garantido no mobile */
+    input[type="date"], select {
+        padding-left: 55px !important;
+        font-size: 1.05rem; /* Texto um pouco maior */
+    }
+
+    /* Ajuste de margem lateral */
+    .app-container {
+        padding: 0 16px;
+    }
 }

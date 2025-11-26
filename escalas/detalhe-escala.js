@@ -1,9 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const escalaHeader = document.getElementById('escala-header');
     const escalaDetailsContent = document.getElementById('escala-details-content');
-    const API_URL = 'https://back-end-volunt-rios.onrender.com';
+    const API_URL = 'http://localhost:5000';
     const token = localStorage.getItem('authToken');
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    
+    // Obter dados do usuário de forma segura
+    let userData = null;
+    try {
+        userData = JSON.parse(localStorage.getItem('userData'));
+    } catch (e) {
+        console.error("Erro ao ler userData", e);
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const turnoId = urlParams.get('id');
@@ -11,6 +17,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!token || !turnoId) {
         window.location.href = '../home/home.html';
         return;
+    }
+
+    // --- FUNÇÃO MODAL CUSTOMIZADO ---
+    function showConfirmModal(title, text, onConfirm) {
+        const overlay = document.createElement('div');
+        overlay.className = 'custom-modal-overlay';
+        overlay.innerHTML = `
+            <div class="custom-modal">
+                <div style="font-size: 2.5rem; margin-bottom: 10px; color: #ef4444;">🗑️</div>
+                <h3 style="margin:0 0 8px 0; font-size:1.2rem; color:#1f2937;">${title}</h3>
+                <p style="margin:0; color:#6b7280; font-size:0.9rem;">${text}</p>
+                <div class="modal-actions">
+                    <button class="btn-modal btn-cancel">Cancelar</button>
+                    <button class="btn-modal btn-confirm-delete">Excluir</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add('open'));
+
+        overlay.querySelector('.btn-cancel').onclick = () => {
+            overlay.classList.remove('open');
+            setTimeout(() => overlay.remove(), 300);
+        };
+        
+        overlay.querySelector('.btn-confirm-delete').onclick = () => {
+            overlay.classList.remove('open');
+            setTimeout(() => overlay.remove(), 300);
+            onConfirm();
+        };
     }
 
     try {
@@ -23,48 +59,72 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayEscalaDetails(turno);
 
     } catch (error) {
-        escalaDetailsContent.innerHTML = `<p>${error.message}</p>`;
+        escalaDetailsContent.innerHTML = `
+            <div style="text-align: center; color: white; padding: 40px;">
+                <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <p>${error.message}</p>
+                <a href="../home/home.html" style="color: white; margin-top: 20px; display: block;">Voltar ao início</a>
+            </div>`;
     }
 
     function displayEscalaDetails(turno) {
         const dataFormatada = new Date(turno.data).toLocaleDateString('pt-BR', {
             weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC'
         });
-        escalaHeader.textContent = `${turno.ministerio.nome} - ${dataFormatada}`;
+        // Capitaliza
+        const dataCap = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
 
-        let voluntariosHtml = turno.voluntarios.map(vol => 
-            `<div class="voluntario-item"><p>${vol.nome} ${vol.sobrenome}</p></div>`
-        ).join('');
+        // Lista de Voluntários com Avatar
+        let voluntariosHtml = turno.voluntarios.map(vol => {
+            const initial = vol.nome.charAt(0).toUpperCase();
+            return `
+                <div class="voluntario-item">
+                    <div class="avatar">${initial}</div>
+                    <div class="v-name">${vol.nome} ${vol.sobrenome || ''}</div>
+                </div>
+            `;
+        }).join('');
 
+        // Botões de Ação (Apenas Líder)
         let actionButtonsHtml = '';
-        // --- LÓGICA DE PERMISSÃO CORRETA ---
-        // Se o ID do usuário logado for o mesmo que criou o turno, mostra os botões de ação
-        if (userData.id === turno.criado_por) {
+        if (userData && userData.id === turno.criado_por) {
             actionButtonsHtml = `
                 <div class="actions-section">
-                    <button id="edit-btn" class="btn btn-secondary">Editar Equipe</button>
-                    <button id="delete-btn" class="btn btn-delete">Excluir Escala</button>
+                    <button id="edit-btn" class="btn btn-edit">
+                        <i class="ph ph-pencil-simple"></i> Editar
+                    </button>
+                    <button id="delete-btn" class="btn btn-delete">
+                        <i class="ph ph-trash"></i> Excluir
+                    </button>
                 </div>
             `;
         }
 
         escalaDetailsContent.innerHTML = `
-            <div class="card">
-                <div class="escala-info">
-                    <p><strong>Ministério:</strong> ${turno.ministerio.nome}</p>
-                    <p><strong>Data:</strong> ${dataFormatada}</p>
-                    <p><strong>Turno:</strong> ${turno.turno}</p>
+            <div class="detail-card">
+                <div class="card-header-hero">
+                    <div class="ministry-badge">
+                        <i class="ph ph-users-three"></i> ${turno.ministerio.nome}
+                    </div>
+                    <h2 class="escala-date">${dataCap}</h2>
+                    <div class="escala-shift">
+                        <i class="ph ph-clock"></i> ${turno.turno}
+                    </div>
                 </div>
-                <div class="voluntarios-list">
-                    <h2>Equipe escalada</h2>
-                    ${voluntariosHtml}
+                
+                <div class="card-body">
+                    <span class="section-label">Equipe Escalada</span>
+                    <div class="voluntarios-list">
+                        ${voluntariosHtml || '<p style="color:#94a3b8; font-size:0.9rem;">Ninguém escalado ainda.</p>'}
+                    </div>
+
+                    ${actionButtonsHtml}
                 </div>
-                ${actionButtonsHtml}
             </div>
         `;
         
-        // Adiciona os event listeners apenas se os botões existirem
-        if (userData.id === turno.criado_por) {
+        // Listeners
+        if (userData && userData.id === turno.criado_por) {
             document.getElementById('edit-btn').addEventListener('click', () => {
                  window.location.href = `../criar-escalas/editar-escala.html?id=${turnoId}`;
             });
@@ -73,25 +133,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     async function handleDelete() {
-        if (!confirm('Tem certeza que deseja excluir esta escala? Esta ação não pode ser desfeita.')) {
-            return;
-        }
+        showConfirmModal(
+            'Excluir Escala',
+            'Tem certeza? Essa ação apagará a escala para todos os voluntários e não pode ser desfeita.',
+            async () => {
+                try {
+                    const response = await fetch(`${API_URL}/api/escalas/turno/${turnoId}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
 
-        try {
-            // A requisição de exclusão agora será validada pelo backend
-            const response = await fetch(`${API_URL}/api/escalas/turno/${turnoId}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.msg || 'Não foi possível excluir a escala.');
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.msg || 'Erro ao excluir.');
+                    }
+                    
+                    // Feedback visual rápido antes de redirecionar
+                    escalaDetailsContent.innerHTML = `
+                        <div style="text-align: center; color: white; padding: 40px;">
+                            <i class="ph ph-check-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Escala excluída com sucesso!</p>
+                        </div>
+                    `;
+                    setTimeout(() => window.location.href = '../home/home.html', 1500);
+                    
+                } catch (error) {
+                    alert(error.message); // Fallback simples para erro de API
+                }
             }
-            alert('Escala excluída com sucesso!');
-            window.location.href = '../home/home.html';
-        } catch (error) {
-            alert(error.message);
-        }
+        );
     }
 });

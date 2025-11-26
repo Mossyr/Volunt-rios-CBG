@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelModalBtn = document.getElementById('modal-cancel-btn');
     const confirmLogoutBtn = document.getElementById('modal-confirm-logout-btn');
 
-    const API_URL = 'https://back-end-volunt-rios.onrender.com';
+    const API_URL = 'http://localhost:5000';
 
     // --- Funções Principais ---
     async function loadProfileData() {
@@ -51,29 +51,49 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateProfile(user) {
         if (!user) return;
 
+        // Atualiza cabeçalho
         userNameEl.textContent = user.nome;
         userEmailEl.textContent = user.email;
         if (user.nome) {
             userInitialEl.textContent = user.nome.charAt(0).toUpperCase();
         }
 
+        // Renderiza Ministérios com novo visual
         ministriesListEl.innerHTML = '';
+        
         if (user.ministerios && user.ministerios.length > 0) {
             user.ministerios.forEach(m => {
                 const ministryItem = document.createElement('div');
-                ministryItem.className = 'ministry-item';
-                const statusClass = m.status === 'Aprovado' ? 'aprovado' : 'pendente';
+                ministryItem.className = 'ministry-card'; // Nova classe CSS
+                
+                // Define classe da badge baseada no status ou função
+                let badgeClass = 'pendente';
+                let badgeText = m.status;
+
+                if (m.status === 'Aprovado') {
+                    if (m.funcao === 'Líder') {
+                        badgeClass = 'lider';
+                        badgeText = 'Líder';
+                    } else {
+                        badgeClass = 'aprovado';
+                        badgeText = 'Voluntário';
+                    }
+                }
+
                 ministryItem.innerHTML = `
                     <div class="ministry-info">
                         <strong>${m.ministerio.nome}</strong>
-                        <span>Função: ${m.funcao}</span>
+                        <span>${m.funcao}</span>
                     </div>
-                    <div class="ministry-status ${statusClass}">${m.status}</div>
+                    <div class="status-badge ${badgeClass}">${badgeText}</div>
                 `;
                 ministriesListEl.appendChild(ministryItem);
             });
         } else {
-            ministriesListEl.innerHTML = '<p>Você ainda não faz parte de nenhum ministério.</p>';
+            ministriesListEl.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: #94a3b8;">
+                    <p>Você ainda não participa de nenhum ministério.</p>
+                </div>`;
         }
     }
     
@@ -103,24 +123,23 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelModalBtn.addEventListener('click', hideLogoutModal);
     confirmLogoutBtn.addEventListener('click', logout);
     
-    // Fecha o modal se clicar fora dele (no backdrop)
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             hideLogoutModal();
         }
     });
 
-    // Placeholders para outras ações
+    // Placeholders
     document.getElementById('edit-profile-btn').addEventListener('click', (e) => {
         e.preventDefault();
-        alert('Funcionalidade de edição de perfil ainda não implementada.');
+        // Aqui você pode adicionar um Toast futuro
+        alert('Edição de perfil em breve!');
     });
 
     document.getElementById('change-password-btn').addEventListener('click', (e) => {
         e.preventDefault();
-        alert('Funcionalidade de alterar senha ainda não implementada.');
+        alert('Alteração de senha em breve!');
     });
 
-    // Inicia o carregamento dos dados
     loadProfileData();
 });

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const pendingListEl = document.getElementById('pending-list');
-    const API_URL = 'https://back-end-volunt-rios.onrender.com';
+    const API_URL = 'http://localhost:5000';
     const token = localStorage.getItem('authToken');
 
     // 1. Pega o ID do ministério da URL

@@ -2,32 +2,128 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Minha Disponibilidade | Voluntários</title>
-    <link rel="stylesheet" href="../css/base.css">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="disponibilidade.css">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="page-header">
-            <a href="../home/home.html" class="back-button">&larr; Voltar</a>
-            <h1>Minha Indisponibilidade</h1>
-            <p>Toque nos dias em que você <strong>não</strong> poderá servir. Dias em vermelho indicam indisponibilidade.</p>
+            <div class="header-content">
+                <h1>Disponibilidade</h1>
+                <p>Toque nos dias para configurar sua ausência.</p>
+            </div>
+            
+            <div class="legend-badges">
+                <span class="badge available"><span class="dot"></span> Livre</span>
+                <span class="badge unavailable"><span class="dot"></span> Indisponível</span>
+            </div>
         </header>
+
         <main>
-            <div class="calendar-card">
+            <div class="calendar-card glass-effect">
                 <div class="calendar-header">
-                    <button id="prev-month-btn">&larr;</button>
-                    <h2 id="month-year-header"></h2>
-                    <button id="next-month-btn">&rarr;</button>
+                    <button id="prev-month-btn" class="nav-btn" aria-label="Mês Anterior">
+                        <i class="ph ph-caret-left"></i>
+                    </button>
+                    <h2 id="month-year-header">Carregando...</h2>
+                    <button id="next-month-btn" class="nav-btn" aria-label="Próximo Mês">
+                        <i class="ph ph-caret-right"></i>
+                    </button>
                 </div>
+                
                 <div class="calendar-weekdays">
-                    <div>D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
+                    <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
                 </div>
-                <div id="calendar-grid" class="calendar-grid"></div>
+                
+                <div id="calendar-grid" class="calendar-grid">
+                    </div>
             </div>
         </main>
     </div>
+
+    <nav class="bottom-nav-island">
+        <a href="../home/home.html" class="nav-item">
+            <i class="ph ph-house"></i>
+        </a>
+        <a href="../disponibilidade/disponibilidade.html" class="nav-item active">
+            <i class="ph ph-calendar-check-fill"></i>
+        </a>
+        <a href="../todas-escalas/todas-escalas.html" class="nav-item">
+            <i class="ph ph-list-dashes"></i>
+        </a>
+        <a href="../assistente/assistente.html" class="nav-item">
+            <i class="ph ph-chat-teardrop-text"></i>
+        </a>
+        <a href="../perfil/perfil.html" class="nav-item">
+            <i class="ph ph-user-circle"></i>
+        </a>
+    </nav>
+
+    <div id="availability-modal" class="custom-modal-overlay" style="display: none; opacity: 0;">
+        <div class="disp-modal-content">
+            
+            <div class="disp-header">
+                <div class="disp-date-display">
+                    <div id="modal-day-number" class="disp-day-number">--</div>
+                    <div id="modal-month-year" class="disp-month-year">--</div>
+                </div>
+                <button id="close-modal-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#cbd5e1;">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="disp-section">
+                <span class="disp-label">Quais turnos você não pode?</span>
+                <div class="toggle-group">
+                    <div class="toggle-chip">
+                        <input type="checkbox" id="check-manha" value="Manhã" checked>
+                        <label for="check-manha">
+                            <i class="ph ph-sun"></i> Manhã
+                        </label>
+                    </div>
+                    <div class="toggle-chip">
+                        <input type="checkbox" id="check-noite" value="Noite" checked>
+                        <label for="check-noite">
+                            <i class="ph ph-moon"></i> Noite
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disp-section">
+                <span class="disp-label">Afeta quais ministérios?</span>
+                <div class="ministry-select-group" id="modal-ministries-list">
+                    </div>
+                <p style="font-size:0.75rem; color:#94a3b8; margin-top:8px; line-height: 1.4;">
+                    Selecione "Todos" se você não poderá ir à igreja neste dia.
+                </p>
+            </div>
+
+            <div class="disp-section">
+                <span class="disp-label">Motivo (Opcional)</span>
+                <textarea id="modal-reason" class="reason-input" placeholder="Ex: Viagem, Trabalho, Doença..."></textarea>
+            </div>
+
+            <div class="disp-actions">
+                <button id="btn-remove-disp" class="btn-delete" style="display: none;" title="Tornar disponível novamente">
+                    <i class="ph ph-trash"></i>
+                </button>
+                <button id="btn-save-disp" class="btn-save">
+                    Confirmar <i class="ph ph-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <script src="disponibilidade.js"></script>
 </body>
 </html>

@@ -1,222 +1,406 @@
-/* Importa a base de estilos */
+/* --- Importações e Reset --- */
 @import url('../css/base.css');
 
 :root {
-    --cor-primaria: #6A5ACD;
-    --cor-secundaria: #4682B4;
-    --cor-fundo: #F8F9FA;
-    --cor-fundo-card: #FFFFFF;
-    --cor-texto-principal: #212529;
-    --cor-texto-secundario: #6C757D;
-    --cor-borda: #E9ECEF;
-    --sombra-card: 0 8px 30px rgba(0, 0, 0, 0.08);
-    --safe-area-bottom: env(safe-area-inset-bottom);
+    /* Paleta de Cores Refinada */
+    --primary: #6366f1; /* Indigo vibrante */
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+    --secondary: #ec4899; /* Pink moderno para acentos */
+    --bg-body: #f3f4f6;
+    --surface: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --success: #10b981;
+    --warning: #f59e0b;
+    
+    /* Espaçamentos e Formas */
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
+    --shadow-float: 0 20px 40px -5px rgba(99, 102, 241, 0.25);
+    
+    --safe-area-bottom: env(safe-area-inset-bottom, 20px);
 }
 
-/* --- Estilos Gerais e Home --- */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
 body {
-    background-color: var(--cor-fundo);
-    font-family: 'Poppins', sans-serif;
-    padding-bottom: calc(80px + var(--safe-area-bottom));
+    background-color: var(--bg-body);
+    font-family: 'Plus Jakarta Sans', sans-serif; /* Fonte mais geométrica e moderna */
+    margin: 0;
+    padding-bottom: 120px; /* Espaço para nav flutuante */
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* --- Fundo Decorativo (Mesh Gradient) --- */
+.mesh-background {
+    position: fixed;
+    top: -10vh;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    background: radial-gradient(circle at 10% 20%, rgb(238, 200, 255) 0%, rgb(227, 243, 255) 90%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    z-index: -1;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+/* --- Header --- */
+.app-container {
+    padding: 0 20px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .home-header {
+    padding-top: max(40px, env(safe-area-inset-top));
+    padding-bottom: 20px;
+    color: white;
+}
+
+.header-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 24px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-greeting .greeting-time {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.user-greeting h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Botão de Notificação com Efeito */
+.notification-bell {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s;
+}
+.notification-bell:active { transform: scale(0.95); }
+
+.notification-counter {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ef4444;
+    border: 2px solid #6366f1; /* Cor do fundo para "recortar" */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* --- Context Switcher (Estilo Segmented Control) --- */
+.context-switcher {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 4px;
+    border-radius: 100px; /* Pill shape total */
+    display: flex;
     position: relative;
 }
 
-.user-greeting {
-    flex-grow: 1;
-}
-.user-greeting p {
-    font-size: 1rem;
-    color: var(--cor-texto-secundario);
-    margin-bottom: 4px;
-}
-.user-greeting h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--cor-texto-principal);
-}
-
-/* --- Context Switcher --- */
-.context-switcher {
-    display: flex;
-    background-color: #E2E9F2;
-    border-radius: 12px;
-    padding: 4px;
-    margin-bottom: 24px;
-}
 .context-btn {
     flex: 1;
-    padding: 10px;
+    padding: 10px 0;
+    text-align: center;
     border: none;
-    background-color: transparent;
-    border-radius: 10px;
-    font-size: 0.9rem;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 600;
-    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+    border-radius: 100px;
     cursor: pointer;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
+
 .context-btn.active {
-    background-color: var(--cor-fundo-card);
-    color: var(--cor-primaria);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* --- Painéis de Conteúdo --- */
-.content-panel {
-    display: none;
-    grid-template-columns: 1fr;
-    gap: 20px;
+/* --- CARD HERO: Compromisso --- */
+.content-panel { 
+    display: none; 
+    flex-direction: column; 
+    gap: 20px; 
+    animation: fadeIn 0.4s ease-out;
 }
-.content-panel.active {
-    display: grid;
-}
+.content-panel.active { display: flex; }
 
-/* --- Estilos Modernizados dos Cards --- */
-.card {
-    background-color: var(--cor-fundo-card);
-    border-radius: 16px;
+.card-commitment {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
     padding: 24px;
-    box-shadow: var(--sombra-card);
-    border: 1px solid var(--cor-borda);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-float);
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid white;
 }
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+
+/* Barra lateral colorida indicativa */
+.card-status-strip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
 }
+
 .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-/* Card de Compromisso */
-.card-commitment { background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; }
-.card-commitment h2, .card-commitment p { color: white; }
-.card-commitment .ministry-tag { background-color: rgba(255, 255, 255, 0.2); color: white; font-weight: 500; }
-.card-commitment .commitment-details { display: grid; gap: 12px; margin-bottom: 24px; }
-.card-commitment .detail-item { display: flex; align-items: center; gap: 12px; color: #EAEAEA; background-color: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 10px; }
-.card-commitment .detail-item svg { color: white; }
-.card-commitment .detail-item span { font-weight: 500; }
-.card-commitment .card-actions .btn-secondary { background-color: transparent; border: 1px solid white; color: white; }
-.card-commitment .card-actions .btn-primary { background-color: white; color: var(--cor-primaria); border: none; }
-
-.card-actions { display: flex; gap: 12px; margin-top: 16px; }
-.card-actions .btn { flex: 1; }
-
-/* Notificações */
-.header-actions { position: relative; }
-.notification-bell { background: none; border: none; padding: 8px; cursor: pointer; color: var(--cor-texto-secundario); position: relative; }
-.notification-counter { position: absolute; top: 4px; right: 4px; background-color: #E53935; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--cor-fundo-card); }
-.notifications-panel { display: none; position: absolute; top: 60px; right: 0; width: 320px; max-width: 90vw; background-color: var(--cor-fundo-card); border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); border: 1px solid var(--cor-borda); z-index: 100; overflow: hidden; }
-.notifications-panel.open { display: block; }
-.notifications-header { padding: 16px; border-bottom: 1px solid var(--cor-borda); }
-.notifications-header h3 { margin: 0; font-size: 1rem; font-weight: 600; }
-.notifications-list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
-
-/* ESTILOS MODIFICADOS PARA O ITEM DE NOTIFICAÇÃO (PARA O BOTÃO DE EXCLUSÃO) */
-.notification-item { 
-    padding: 16px; 
-    display: flex; /* Tornar o item um flex container */
-    justify-content: space-between; /* Espaço entre o conteúdo e o botão */
     align-items: flex-start;
-    gap: 12px; 
-    border-bottom: 1px solid var(--cor-borda); 
-    font-size: 0.9rem; 
-    color: var(--cor-texto-secundario); 
-    cursor: pointer; /* Indica que é clicável (para o link) */
-    position: relative;
-    transition: background-color 0.2s;
+    margin-bottom: 20px;
 }
 
-/* Estilo para o wrapper do conteúdo para manter o ícone e o texto juntos */
-.notification-item .notification-content-wrapper {
+.ministry-badge {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.next-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.commitment-main {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.date-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    min-width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.date-day { font-size: 1.6rem; font-weight: 800; color: var(--text-main); line-height: 1; }
+.date-month { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+
+.info-box h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.3rem;
+    color: var(--text-main);
+}
+
+.time-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.card-actions {
     display: flex;
     gap: 12px;
-    align-items: flex-start;
-    flex-grow: 1; /* Ocupa o espaço restante */
-}
-.notification-item:hover {
-    background-color: var(--cor-fundo); /* Leve destaque ao passar o mouse */
-}
-.notification-item.unread {
-    background-color: #f7f9fd; /* Fundo leve para não lidas */
-    border-left: 4px solid var(--cor-primaria); /* Linha lateral */
-    padding-left: 12px;
 }
 
-.notification-item-empty { 
-    padding: 24px; 
-    text-align: center; 
-    color: var(--cor-texto-secundario); 
-    font-size: 0.9rem; 
-}
-
-/* NOVO: Estilo para o botão de exclusão */
-.delete-notification-btn {
-    background: none;
+.btn {
     border: none;
-    color: var(--cor-texto-secundario);
-    font-size: 1.2rem;
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
-    padding: 0 4px; /* Pequeno padding para facilitar o clique */
-    line-height: 1;
-    opacity: 0.6;
-    transition: opacity 0.2s, color 0.2s;
-    margin-top: -4px; /* Ajuste fino de posição */
-    flex-shrink: 0; /* Não permite que encolha */
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+    background: var(--text-main); /* Preto suave */
+    color: white;
+    flex-grow: 1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.delete-notification-btn:hover {
-    opacity: 1;
-    color: #E53935; /* Cor de perigo ao passar o mouse */
+.btn-icon {
+    background: var(--bg-body);
+    color: var(--text-main);
+    width: 48px;
+    padding: 0;
+    font-size: 1.2rem;
 }
 
+/* --- Link Rápido --- */
+.quick-links { text-align: center; margin: 10px 0 20px 0; }
+.link-item {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
 
-/* Link "Ver todas as escalas" */
-.view-all-schedules-link { text-align: center; margin: -8px 0 20px 0; }
-.view-all-schedules-link a { color: var(--cor-primaria); font-weight: 600; text-decoration: none; transition: opacity 0.3s ease; }
-.view-all-schedules-link a:hover { opacity: 0.8; }
+/* --- Card Avisos --- */
+.card-avisos {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #e5e7eb;
+}
+.aviso-icon {
+    background: #fef3c7;
+    color: #d97706;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+.aviso-content h2 { margin: 0; font-size: 1rem; color: var(--text-main); }
+.aviso-content p { margin: 4px 0 0 0; font-size: 0.85rem; color: var(--text-muted); }
 
-/* ====================================================== */
-/* --- ESTILOS FALTANTES PARA O PAINEL DE LIDERANÇA --- */
-/* ====================================================== */
-.ministry-leader-card {
+
+/* --- Navegação Flutuante (Island) --- */
+.bottom-nav-island {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: 90%;
+    max-width: 400px;
+    height: 70px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.5);
+    z-index: 100;
+}
+
+.nav-item {
+    color: #94a3b8;
+    font-size: 1.6rem;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item.active {
+    color: var(--primary);
+    background: var(--primary-light);
+    transform: translateY(-5px);
+}
+
+/* --- Notificações --- */
+.notifications-panel {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    left: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+    z-index: 200;
+    max-height: 400px;
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+}
+.notifications-panel.open { display: block; }
+
+.notifications-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f1f5f9;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    border-radius: 12px;
-    background-color: var(--cor-fundo);
-    border: 1px solid var(--cor-borda);
-    text-decoration: none;
-    color: var(--cor-texto-principal);
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
 }
-.ministry-leader-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--sombra-card);
-    border-color: var(--cor-primaria);
+.notifications-header h3 { margin: 0; font-size: 1.1rem; }
+.close-notif { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #64748b; }
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 350px;
+    overflow-y: auto;
 }
-.ministry-leader-card strong {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-.ministry-leader-card span {
+.notification-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f1f5f9;
     font-size: 0.9rem;
-    color: var(--cor-texto-secundario);
+    color: var(--text-muted);
 }
-.ministry-arrow {
-    font-size: 1.5rem;
-    color: var(--cor-primaria);
+.notification-item-empty { padding: 30px; text-align: center; color: #cbd5e1; }
+
+/* Animações */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsividade de Altura */
+@media (max-height: 700px) {
+    .mesh-background { height: 40vh; }
+    .home-header { padding-bottom: 10px; }
 }

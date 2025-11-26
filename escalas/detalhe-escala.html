@@ -2,20 +2,49 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Detalhes da Escala | Voluntários</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="detalhe-escala.css">
 </head>
 <body>
+    
+    <div class="mesh-background"></div>
+
     <div class="app-container">
         <header class="page-header">
-            <a href="javascript:history.back()" class="back-button">&larr; Voltar</a>
-            <h1 id="escala-header">Carregando...</h1>
+            <a href="javascript:history.back()" class="back-button glass-effect" aria-label="Voltar">
+                <i class="ph ph-caret-left"></i>
+            </a>
+            <h1 class="header-title">Detalhes da Escala</h1>
         </header>
 
-        <main id="escala-details-content">
-            </main>
+        <main id="escala-details-content" class="content-wrapper">
+            <div class="loader-container">
+                <i class="ph ph-spinner-gap ph-spin"></i>
+            </div>
+        </main>
     </div>
+
+    <nav class="bottom-nav-island">
+        <a href="../home/home.html" class="nav-item">
+            <i class="ph ph-house"></i>
+        </a>
+        <a href="../disponibilidade/disponibilidade.html" class="nav-item">
+            <i class="ph ph-calendar-check"></i>
+        </a>
+        <a href="../todas-escalas/todas-escalas.html" class="nav-item active">
+            <i class="ph ph-list-dashes-fill"></i>
+        </a>
+        <a href="../assistente/assistente.html" class="nav-item">
+            <i class="ph ph-chat-teardrop-text"></i>
+        </a>
+        <a href="../perfil/perfil.html" class="nav-item">
+            <i class="ph ph-user-circle"></i>
+        </a>
+    </nav>
+    
     <script src="detalhe-escala.js"></script>
 </body>
 </html>
