@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnSave = document.getElementById('btn-save-disp');
     const btnRemove = document.getElementById('btn-remove-disp');
 
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
 
     if (!token) { window.location.href = '../login/login.html'; return; }

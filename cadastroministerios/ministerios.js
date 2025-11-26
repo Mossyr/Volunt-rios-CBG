@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const ministryListDiv = document.querySelector('.ministry-list');
     const continueBtn = document.getElementById('continue-btn');
-    const API_URL = 'http://localhost:5000'; // URL base da sua API
+    const API_URL = 'https://back-end-volunt-rios.onrender.com'; // URL base da sua API
 
     // Função para buscar e exibir os ministérios
     async function fetchAndDisplayMinisterios() {

@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const ministryGridEl = document.getElementById('leader-ministry-grid');
     const loadingStatusEl = document.getElementById('loading-status');
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     async function loadLeaderPanel() {
         const token = localStorage.getItem('authToken');

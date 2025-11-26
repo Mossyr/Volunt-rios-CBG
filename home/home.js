@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationsList = document.getElementById('notifications-list');
     const closeNotificationBtn = document.querySelector('.close-notif'); // Novo botão de fechar
 
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     async function loadHomePage() {
         const token = localStorage.getItem('authToken');

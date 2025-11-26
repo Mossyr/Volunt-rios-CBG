@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chatContainer = document.getElementById('chat-container');
     const chatMessages = document.getElementById('chat-messages');
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     if (!chatContainer || !chatMessages) return;
 

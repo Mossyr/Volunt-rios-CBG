@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const escalaDetailsContent = document.getElementById('escala-details-content');
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
     
     // Obter dados do usuário de forma segura

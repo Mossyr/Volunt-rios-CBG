@@ -1,7 +1,7 @@
 // detalhe-troca.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
     const userData = JSON.parse(localStorage.getItem('userData'));
     let currentTrocaId = null; 

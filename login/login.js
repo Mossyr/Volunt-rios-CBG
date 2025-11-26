@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
-    const API_URL = 'http://localhost:5000'; // URL base da sua API
+    const API_URL = 'https://back-end-volunt-rios.onrender.com'; // URL base da sua API
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();

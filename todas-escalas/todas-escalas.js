@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const escalasListDiv = document.getElementById('public-escalas-list');
     const filtersDiv = document.getElementById('ministry-filters');
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
 
     if (!token) {

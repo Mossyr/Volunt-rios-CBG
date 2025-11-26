@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelModalBtn = document.getElementById('modal-cancel-btn');
     const confirmLogoutBtn = document.getElementById('modal-confirm-logout-btn');
 
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
 
     // --- Funções Principais ---
     async function loadProfileData() {

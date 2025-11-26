@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const countEscalas = document.getElementById('count-escalas');
     const countVoluntarios = document.getElementById('count-voluntarios');
 
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
 
     const urlParams = new URLSearchParams(window.location.search);

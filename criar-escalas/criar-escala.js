@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const voluntariosTelaoDiv = document.getElementById('voluntarios-telao');
     const voluntariosStoriesDiv = document.getElementById('voluntarios-stories');
 
-    const API_URL = 'http://localhost:5000';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
     const urlParams = new URLSearchParams(window.location.search);
     const ministerioId = urlParams.get('ministerioId');
