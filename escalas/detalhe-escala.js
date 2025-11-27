@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const escalaDetailsContent = document.getElementById('escala-details-content');
-    const API_URL = 'https://back-end-volunt-rios.onrender.com';
+    const API_URL = 'https://back-end-volunt-rios.onrender.com'; // Ajustado para local ou sua URL de prod
     const token = localStorage.getItem('authToken');
     
-    // Obter dados do usuário de forma segura
     let userData = null;
     try {
         userData = JSON.parse(localStorage.getItem('userData'));
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         overlay.className = 'custom-modal-overlay';
         overlay.innerHTML = `
             <div class="custom-modal">
-                <div style="font-size: 2.5rem; margin-bottom: 10px; color: #ef4444;">🗑️</div>
+                <div style="font-size: 2.5rem; margin-bottom: 10px;">🗑️</div>
                 <h3 style="margin:0 0 8px 0; font-size:1.2rem; color:#1f2937;">${title}</h3>
                 <p style="margin:0; color:#6b7280; font-size:0.9rem;">${text}</p>
                 <div class="modal-actions">
@@ -59,10 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayEscalaDetails(turno);
 
     } catch (error) {
+        console.error(error);
         escalaDetailsContent.innerHTML = `
             <div style="text-align: center; color: white; padding: 40px;">
                 <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
-                <p>${error.message}</p>
+                <p>Não foi possível carregar os detalhes.</p>
                 <a href="../home/home.html" style="color: white; margin-top: 20px; display: block;">Voltar ao início</a>
             </div>`;
     }
@@ -71,21 +71,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dataFormatada = new Date(turno.data).toLocaleDateString('pt-BR', {
             weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC'
         });
-        // Capitaliza
         const dataCap = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
 
-        // Lista de Voluntários com Avatar
+        // --- CORREÇÃO AQUI: EXTRAÇÃO SEGURA DO NOME E FUNÇÃO ---
         let voluntariosHtml = turno.voluntarios.map(vol => {
-            const initial = vol.nome.charAt(0).toUpperCase();
+            // Tenta achar o nome (pode estar em 'vol.nome' ou 'vol.usuario.nome')
+            let nome = 'Voluntário';
+            
+            if (vol.nome) { 
+                nome = vol.nome; // Formato "achatado" pelo controller
+            } else if (vol.usuario && vol.usuario.nome) {
+                nome = vol.usuario.nome; // Formato aninhado original
+            }
+            
+            const sobrenome = vol.sobrenome || (vol.usuario ? vol.usuario.sobrenome : '') || '';
+            const role = vol.role || 'Voluntário';
+            
+            const initial = nome.charAt(0).toUpperCase();
+            
+            // Mostra a função se não for padrão
+            const roleBadge = (role !== 'Voluntário') 
+                ? `<span style="font-size:0.75rem; background:#e0e7ff; color:#4f46e5; padding:2px 8px; border-radius:10px; margin-left:6px;">${role}</span>` 
+                : '';
+
             return `
                 <div class="voluntario-item">
                     <div class="avatar">${initial}</div>
-                    <div class="v-name">${vol.nome} ${vol.sobrenome || ''}</div>
+                    <div class="v-info">
+                        <div class="v-name">
+                            ${nome} ${sobrenome}
+                            ${roleBadge}
+                        </div>
+                    </div>
                 </div>
             `;
         }).join('');
 
-        // Botões de Ação (Apenas Líder)
+        // Botões de Ação
         let actionButtonsHtml = '';
         if (userData && userData.id === turno.criado_por) {
             actionButtonsHtml = `
@@ -148,7 +170,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         throw new Error(err.msg || 'Erro ao excluir.');
                     }
                     
-                    // Feedback visual rápido antes de redirecionar
                     escalaDetailsContent.innerHTML = `
                         <div style="text-align: center; color: white; padding: 40px;">
                             <i class="ph ph-check-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
@@ -158,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     setTimeout(() => window.location.href = '../home/home.html', 1500);
                     
                 } catch (error) {
-                    alert(error.message); // Fallback simples para erro de API
+                    alert(error.message);
                 }
             }
         );
