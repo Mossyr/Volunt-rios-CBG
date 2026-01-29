@@ -184,9 +184,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!escalaResponse.ok) throw new Error('Falha ao carregar escala.');
             escalaAtual = await escalaResponse.json();
 
-            const volResponse = await fetch(`${API_URL}/api/lider/voluntarios/${escalaAtual.ministerio._id}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            // ✅ CORREÇÃO AQUI: ADICIONA O TURNO NA QUERY
+            const dataISO = new Date(escalaAtual.data).toISOString().split('T')[0];
+            const turnoQuery = escalaAtual.turno || 'Manhã'; // Fallback caso não tenha turno
+            
+            const volResponse = await fetch(
+                `${API_URL}/api/lider/voluntarios/${escalaAtual.ministerio._id}?data=${dataISO}&turno=${turnoQuery}`, 
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            );
             if (!volResponse.ok) throw new Error('Falha ao carregar voluntários.');
             todosVoluntariosDoMinisterio = await volResponse.json();
             

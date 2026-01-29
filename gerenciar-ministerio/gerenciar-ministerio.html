@@ -43,13 +43,31 @@
                     </a>
                 </section>
 
+                <!-- ✨ NOVO: CALENDÁRIO DE INDISPONIBILIDADES -->
+                <section class="content-section calendar-section">
+                    <div class="section-header">
+                        <h3><i class="ph ph-calendar-x"></i> Indisponibilidades</h3>
+                    </div>
+                    <div class="calendar-card glass-effect">
+                        <div class="calendar-header">
+                            <button id="prev-month-btn" class="nav-btn"><i class="ph ph-caret-left"></i></button>
+                            <h2 id="month-year-header">Carregando...</h2>
+                            <button id="next-month-btn" class="nav-btn"><i class="ph ph-caret-right"></i></button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+                        </div>
+                        <div id="calendar-grid" class="calendar-grid"></div>
+                    </div>
+                </section>
+
                 <section class="content-section">
                     <div class="section-header">
                         <h3>Próximas Escalas</h3>
                         <span class="badge-count" id="count-escalas">0</span>
                     </div>
                     <div id="proximas-escalas-list" class="schedules-list">
-                        </div>
+                    </div>
                 </section>
 
                 <section class="content-section">
@@ -59,7 +77,7 @@
                     </div>
                     <div class="volunteers-card glass-effect">
                         <ul id="voluntarios-list" class="volunteers-list">
-                            </ul>
+                        </ul>
                     </div>
                 </section>
             </div>
@@ -83,6 +101,27 @@
             <i class="ph ph-user-circle"></i>
         </a>
     </nav>
+
+    <!-- ✨ MODAL DE INDISPONIBILIDADES DO DIA -->
+    <div id="unavailability-modal" class="custom-modal-overlay" style="display: none; opacity: 0;">
+        <div class="unavail-modal-content">
+            <div class="unavail-header">
+                <div class="unavail-date-display">
+                    <div id="modal-day-number" class="unavail-day-number">--</div>
+                    <div id="modal-month-year" class="unavail-month-year">--</div>
+                </div>
+                <button id="close-modal-btn" class="btn-close-modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="unavail-body">
+                <h3>Voluntários Indisponíveis</h3>
+                <div id="unavailable-volunteers-list" class="unavail-list">
+                    <!-- Preenchido dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script src="gerenciar-ministerio.js"></script>
 </body>

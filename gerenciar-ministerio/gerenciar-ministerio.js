@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const countEscalas = document.getElementById('count-escalas');
     const countVoluntarios = document.getElementById('count-voluntarios');
 
+    // ✨ CALENDÁRIO
+    const calendarGrid = document.getElementById('calendar-grid');
+    const monthYearHeader = document.getElementById('month-year-header');
+    const prevMonthBtn = document.getElementById('prev-month-btn');
+    const nextMonthBtn = document.getElementById('next-month-btn');
+    
+    // ✨ MODAL
+    const modalOverlay = document.getElementById('unavailability-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalDayNum = document.getElementById('modal-day-number');
+    const modalMonthYear = document.getElementById('modal-month-year');
+    const unavailableVolunteersList = document.getElementById('unavailable-volunteers-list');
+
     const API_URL = 'https://back-end-volunt-rios.onrender.com';
     const token = localStorage.getItem('authToken');
 
@@ -19,6 +32,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '../home/home.html';
         return;
     }
+
+    // ✨ ESTADO DO CALENDÁRIO
+    let currentDate = new Date();
+    currentDate.setDate(1);
+    let unavailabilitiesMap = new Map(); // dateString -> array de indisponibilidades
 
     // --- FUNÇÃO MODAL CUSTOMIZADO ---
     function showConfirmModal(title, text, onConfirm) {
@@ -49,6 +67,152 @@ document.addEventListener('DOMContentLoaded', async () => {
             onConfirm();
         };
     }
+
+    // ✨ BUSCAR INDISPONIBILIDADES DOS VOLUNTÁRIOS DO MINISTÉRIO
+    async function fetchUnavailabilities() {
+        try {
+            const month = currentDate.getMonth();
+            const year = currentDate.getFullYear();
+            
+            // Busca as indisponibilidades do mês atual
+            const response = await fetch(`${API_URL}/api/lider/indisponibilidades/${ministerioId}?mes=${month}&ano=${year}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            
+            if (!response.ok) return;
+            
+            const data = await response.json();
+            unavailabilitiesMap.clear();
+            
+            // Organiza por data
+            data.forEach(item => {
+                const dateStr = new Date(item.data).toISOString().split('T')[0];
+                if (!unavailabilitiesMap.has(dateStr)) {
+                    unavailabilitiesMap.set(dateStr, []);
+                }
+                unavailabilitiesMap.get(dateStr).push(item);
+            });
+            
+            renderCalendar();
+        } catch (error) {
+            console.error("Erro ao buscar indisponibilidades:", error);
+        }
+    }
+
+    // ✨ RENDERIZAR CALENDÁRIO
+    function renderCalendar() {
+        calendarGrid.innerHTML = '';
+        const month = currentDate.getMonth();
+        const year = currentDate.getFullYear();
+        const monthName = new Date(year, month).toLocaleDateString('pt-BR', { month: 'long' });
+        monthYearHeader.textContent = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
+
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date(); 
+        today.setHours(0, 0, 0, 0);
+
+        // Dias vazios antes do início do mês
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            calendarGrid.appendChild(document.createElement('div'));
+        }
+
+        // Dias do mês
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'calendar-day';
+            dayEl.textContent = day;
+            
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const dateObj = new Date(year, month, day);
+            dayEl.dataset.date = dateString;
+
+            // Marca dias passados
+            if (dateObj < today) {
+                dayEl.classList.add('past-day');
+            }
+
+            // Marca hoje
+            if (dateObj.getTime() === today.getTime()) {
+                dayEl.classList.add('today');
+            }
+
+            // Marca dias com indisponibilidades (pontinho vermelho)
+            if (unavailabilitiesMap.has(dateString)) {
+                dayEl.classList.add('has-unavailable');
+                dayEl.style.cursor = 'pointer';
+            }
+
+            calendarGrid.appendChild(dayEl);
+        }
+    }
+
+    // ✨ ABRIR MODAL COM INDISPONIBILIDADES DO DIA
+    function openUnavailabilityModal(dateString) {
+        const unavailabilities = unavailabilitiesMap.get(dateString) || [];
+        
+        if (unavailabilities.length === 0) return;
+
+        const dateObj = new Date(dateString + 'T00:00:00');
+        modalDayNum.textContent = dateObj.getDate();
+        modalMonthYear.textContent = dateObj.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+        // Renderiza lista de voluntários indisponíveis
+        unavailableVolunteersList.innerHTML = '';
+        
+        unavailabilities.forEach(item => {
+            const volunteerDiv = document.createElement('div');
+            volunteerDiv.className = 'unavail-item';
+            
+            const turnos = item.turnosIndisponiveis.join(', ');
+            const motivoText = item.motivo ? `<div class="unavail-detail"><i class="ph ph-note"></i> ${item.motivo}</div>` : '';
+            
+            volunteerDiv.innerHTML = `
+                <div class="unavail-volunteer-name">
+                    <i class="ph ph-user-circle-minus"></i>
+                    ${item.usuario.nome} ${item.usuario.sobrenome || ''}
+                </div>
+                <div class="unavail-details">
+                    <div class="unavail-detail">
+                        <i class="ph ph-clock"></i>
+                        <strong>Turnos:</strong> ${turnos}
+                    </div>
+                    ${motivoText}
+                </div>
+            `;
+            
+            unavailableVolunteersList.appendChild(volunteerDiv);
+        });
+
+        modalOverlay.style.display = 'flex';
+        setTimeout(() => modalOverlay.style.opacity = '1', 10);
+    }
+
+    // ✨ FECHAR MODAL
+    function closeUnavailabilityModal() {
+        modalOverlay.style.opacity = '0';
+        setTimeout(() => modalOverlay.style.display = 'none', 300);
+    }
+
+    // ✨ EVENTOS DO CALENDÁRIO
+    calendarGrid.addEventListener('click', (e) => {
+        const dayEl = e.target.closest('.calendar-day');
+        if (dayEl && dayEl.classList.contains('has-unavailable')) {
+            openUnavailabilityModal(dayEl.dataset.date);
+        }
+    });
+
+    prevMonthBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        fetchUnavailabilities();
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        fetchUnavailabilities();
+    });
+
+    closeModalBtn.addEventListener('click', closeUnavailabilityModal);
 
     try {
         const response = await fetch(`${API_URL}/api/lider/dashboard/${ministerioId}`, {
@@ -107,8 +271,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             voluntariosList.appendChild(item);
         });
 
+        // ✨ BUSCAR INDISPONIBILIDADES
+        await fetchUnavailabilities();
+
         loader.style.display = 'none';
-        dashboardContent.style.display = 'grid'; // Grid display para ativar layout
+        dashboardContent.style.display = 'grid';
 
     } catch (error) {
         console.error("Erro:", error);
